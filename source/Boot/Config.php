@@ -5,13 +5,13 @@ if (strpos($_SERVER["HTTP_HOST"], "localhost")) {
     define("CONF_DB_HOST","127.0.0.1");
 define("CONF_DB_USER","root");
 define("CONF_DB_NAME","LuVariedad");
-define("CONF_DB_PASSWD","0131");
+define("CONF_DB_PASSWD","");
 
 }else{
     define("CONF_DB_HOST","localhost");
-define("CONF_DB_USER","lucasdevjr_lucasdevjr");
-define("CONF_DB_NAME","lucasdevjr_LuVariedad");
-define("CONF_DB_PASSWD","ptevnjpszfpi7xuguy");
+define("CONF_DB_USER","");
+define("CONF_DB_NAME","");
+define("CONF_DB_PASSWD","");
 
 }
 
