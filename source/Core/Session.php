@@ -3,14 +3,6 @@
 
 namespace Source\Core;
 
-
-
-/**
- * FSPHP | Class Session
- *
- * @author Robson V. Leite <cursos@upinside.com.br>
- * @package Source\Core
- */
 class Session
 {
     /**
@@ -20,9 +12,20 @@ class Session
     {
         
         if(!session_id()){
-        
             session_start();
         };
+    }
+
+        /**
+     * @param $name
+     * @return null|mixed
+     */
+    public function __get($name)
+    {
+        if (!empty($_SESSION[$name])) {
+            return $_SESSION[$name];
+        }
+        return null;
     }
 
     /**
@@ -65,4 +68,14 @@ class Session
     
         return isset($_SESSION[$key]);
     }
+
+     /**
+     * CSRF Token
+     */
+    public function csrf(): void
+    {
+        $_SESSION['csrf_token'] = md5(uniqid(rand(), true));
+    }
 }
+
+

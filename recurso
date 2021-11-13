@@ -1,0 +1,59 @@
+ // $banner = (new Banners())->find("WHERE id =", "'1';")->fetch(true);
+
+        // $count = (new Product)->count();
+        // $pager = new Pager(url("/p/"));
+        // $pager->pager($count, 9, ($data['page'] ?? 1));
+        // $product = (new Product())->findProduct("content.* , imagem1")->order("id DESC")->limit($pager->limit())->offset($pager->offset())->fetch(true);
+#home
+
+
+    <div class="col-sm-12">
+      </div>
+      <div class="mb-3">
+        <label for="inputEmail3" class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-12">
+         
+        </div>
+      </div>
+
+
+
+
+      
+// /**
+//  * redirect
+//  * @return void
+//  */
+// function redirect(string $url): void
+// {
+//     header("HTTP/1.1 302 Redicert");
+//     if (filter_var($url, FILTER_VALIDATE_URL)) {
+//         header("Location: {$url}");
+//         exit;
+//     }
+//     if (filter_input(INPUT_GET, "router", FILTER_DEFAULT) != $url) {
+//         $location = url($url);
+//         header("Location: {$location}");
+//         exit;
+//     }
+// }
+
+
+
+// /**
+//  * URL
+//  * @return string
+//  */
+// function url(string $path = null): string
+// {
+//     if (strpos($_SERVER["HTTP_HOST"], "localhost")) {
+//         if ($path) {
+//             return CONF_URL_TEST . "/"  . ($path[0] == "/" ? mb_substr($path, 1) : $path);
+//         }
+//         return CONF_URL_TEST;
+//     }
+//     if ($path) {
+//         return CONF_URL_BASE . "/"  . ($path[0] == "/" ? mb_substr($path, 1) : $path);
+//     }
+//     return CONF_URL_BASE;
+// }

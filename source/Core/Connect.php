@@ -24,13 +24,10 @@ class Connect
                     CONF_DB_PASSWD,
                     self::OPTIONS
                 );
-                
             } catch (\PDOException $exception) {
-                redirect("/ops/problemas");
+                throw new \PDOException($exception->getMessage(), (int)$exception->getCode());
             }
         }
         return self::$instance;
     }
-   
-
 }
