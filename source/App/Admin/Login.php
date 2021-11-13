@@ -54,18 +54,7 @@ class Login extends Controller
             }
         }
 
-        $head = $this->seo->render(
-            CONF_SITE_NAME . " | Admin",
-            CONF_SITE_DESC,
-            url("/admin"),
-            CONF_VIEW_ADMIN,
-            false
-        );
-
-        echo $this->view->render("login/login", [
-            "head" => $head,
-            "cookie" => filter_input(INPUT_COOKIE, "authUser")
-        ]);
+       
     }
 
    

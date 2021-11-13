@@ -2,17 +2,17 @@
 
 namespace Source\Core;
 
-
 abstract class Model
 {
+    protected $protected;
 
-    protected static $protected;
-
-    protected static $entity;
+    protected $table;
 
     protected $data;
 
     protected $params;
+
+    protected $fillable;
 
     protected $order;
 
@@ -26,13 +26,40 @@ abstract class Model
 
     protected $last_id;
 
-    /***
-     * responsavel por fazer uma busca na tabela conteudo
+    /**
+     * @param $name
+     * @param $value
      */
-    public function __construct(string $entity, ?string $protected = null)
+    public function __set($name, $value)
     {
-        self::$entity = $entity;
-        self::$protected = $protected;
+        if (empty($this->data)) {
+            $this->data = new \stdClass();
+        }
+
+        $this->data->$name = $value;
+    }
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function __isset($name)
+    {
+        return isset($this->data->$name);
+    }
+
+    /**
+     * @param $name
+     * @return null
+     */
+    public function __get($name)
+    {
+        return ($this->data->$name ?? null);
+    }
+
+    public function data(): ?object
+    {
+        return $this->data;
     }
 
     public function lastID()
@@ -41,14 +68,28 @@ abstract class Model
 
         return $this;
     }
-    public function find(?string $terms = null, ?string $params = null, string $columns = "*")
-    {
-        if ($terms) {
-            $this->query = "SELECT {$columns} FROM " . self::$entity . $terms . " " . $params . "  ";
-            return $this;
-        }
-        $this->query = "SELECT {$columns} FROM " . self::$entity;
 
+    public function auth($email)
+    {
+
+        $this->query = "SELECT * FROM {$this->table} WHERE email = '$email'";
+        return $this->fetch();
+    }
+
+    public function find($id)
+    {
+        try {
+            $stmt = Connect::getInstance()->prepare("SELECT * FROM {$this->table} WHERE id = :id");
+            $stmt->bindValue(":id", $id);
+            $stmt->execute();
+            return $stmt->fetchObject(static::class);
+        } catch (\PDOException $exception) {
+        }
+    }
+
+    public function where(string $column, string $value, $expression = "=")
+    {
+        $this->query = "SELECT * FROM {$this->table} WHERE {$column} {$expression} '{$value}'";
         return $this;
     }
     /**
@@ -83,27 +124,14 @@ abstract class Model
         $this->offset = " OFFSET {$offset}";
         return $this;
     }
-    /**faz a contagem de todas as posicoes na tabela */
-    public function count(?string $params = null): int
-    {
-        try {
-            if (!empty($params)) {
-                $this->query = ("SELECT * FROM " . self::$entity . $params);
-            } else {
-                $this->query = ("SELECT * FROM " . self::$entity);
-            }
 
-            $stmt = Connect::getInstance()->prepare($this->query);
-            $stmt->execute();
-            return $stmt->rowCount();
-        } catch (\PDOException $exception) {
-            redirect("/ops/problemas");
-        }
+    public function count(?string $params = null)
+    {
+        $stmt = Connect::getInstance()->prepare($this->query);
+        $stmt->execute($this->params);
+        return $stmt->rowCount();
     }
-    /**
-     * select *from imagem order by {} LIMIt {};
-     * executa os elementos anteriores
-     */
+
     public function fetch(bool $all = false)
     {
         try {
@@ -114,25 +142,34 @@ abstract class Model
             }
             return $stmt->fetchObject(static::class);
         } catch (\PDOException $exception) {
-            redirect("/ops/problemas");
+            throw new \PDOException($exception->getMessage(), (int)$exception->getCode());
         }
     }
 
-
-    public function insert(?string $terms, ?string $params, ?string $columns = null)
+    public function create(array $values)
     {
         try {
+            $save = [];
+            foreach ($values as $key => $value) {
+                in_array($key, $this->fillable) ? $save[$key] = $value : "";
+            }
 
-            $stmt = Connect::getInstance()->prepare("INSERT INTO " . self::$entity . " ({$terms}) values({$params})");
-            $stmt->execute();
+            $columns = implode(", ", array_keys($save));
+            $values = ":" . implode(", :", array_keys($save));
+            $stmt = Connect::getInstance()->prepare("INSERT INTO {$this->table} ({$columns}) VALUES ({$values})");
+            $stmt->execute($save);
+            $id = Connect::getInstance()->lastInsertId();
+            $this->data = $this->find($id)->data();
+            return $this;
         } catch (\PDOException $exception) {
-            redirect("/ops/problemas");
+            return null;
         }
     }
+    
     public function update(?string $terms = null, ?string $params = null, ?string $columns = null)
     {
         try {
-            $stmt = Connect::getInstance()->prepare("UPDATE " . self::$entity . " SET {$terms} {$params}");
+            $stmt = Connect::getInstance()->prepare("UPDATE {$this->table} SET {$terms} {$params}");
             $stmt->execute();
         } catch (\PDOException $exception) {
             redirect("/ops/problemas");
@@ -142,10 +179,38 @@ abstract class Model
     public function delete(?string $params, ?string $terms, ?string $columns = null)
     {
         try {
-            $stmt = Connect::getInstance()->prepare("DELETE FROM " . self::$entity . " WHERE {$params} '{$terms}'");
+            $stmt = Connect::getInstance()->prepare("DELETE FROM {$this->table} WHERE {$params} '{$terms}'");
             $stmt->execute();
         } catch (\PDOException $exception) {
             redirect("/ops/problemas");
         }
+    }
+
+      /**
+     * @param array $data
+     * @return array|null
+     */
+    private function filter(array $data): ?array
+    {
+        $filter = [];
+        foreach ($data as $key => $value) {
+            $filter[$key] = (is_null($value) ? null : filter_var($value, FILTER_DEFAULT));
+        }
+        return $filter;
+    }
+
+
+    /**
+     * @return bool
+     */
+    protected function required(): bool
+    {
+        $data = (array)$this->data();
+        foreach ($this->fillable as $field) {
+            if (empty($data[$field])) {
+                return false;
+            }
+        }
+        return true;
     }
 }

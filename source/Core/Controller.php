@@ -2,7 +2,7 @@
 
 namespace Source\Core;
 
-
+use Source\Support\Seo;
 
 class Controller
 {
@@ -11,7 +11,8 @@ class Controller
 
     public function __construct(string $pathToView = null)
     {
-        $this->view = new View($pathToView);
+        
+        $this->view = new View(__DIR__ . "/../../themes/");
         $this->seo = new Seo();
     }
 }
