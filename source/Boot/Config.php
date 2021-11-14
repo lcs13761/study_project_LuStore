@@ -1,19 +1,10 @@
 <?php
 
 
-if (strpos($_SERVER["HTTP_HOST"], "localhost")) {
-    define("CONF_DB_HOST","127.0.0.1");
-define("CONF_DB_USER","root");
-define("CONF_DB_NAME","LuVariedad");
-define("CONF_DB_PASSWD","");
-
-}else{
-    define("CONF_DB_HOST","mysql");
+define("CONF_DB_HOST","mysql");
 define("CONF_DB_USER","root");
 define("CONF_DB_NAME","lutest");
 define("CONF_DB_PASSWD","root");
-
-}
 
 define("CONF_URL_BASE","http://www.localhost:8080");
 define("CONF_URL_TEST" , "http://www.localhost:8080");

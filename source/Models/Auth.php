@@ -1,6 +1,6 @@
 <?php
 
-namespace Source\Model;
+namespace Source\Models;
 
 use Source\Core\Model;
 use Source\Core\Session;
@@ -8,20 +8,9 @@ use Source\Core\Session;
 class Auth extends Model
 {
 
-    protected $entity = "users";
+    protected $table = "users";
 
-    /**
-     * @return null|User
-     */
-    public static function user()
-    {
-        $session = new Session();
-        if (!$session->has("authUser")) {
-            return null;
-        }
-        
-        return $session->has("authUser");
-    }
+
     /**
      * log-out
      */
@@ -42,12 +31,12 @@ class Auth extends Model
         $credentials = (object)$credentials;
         $user = $this->auth($credentials->email);
         if (!$user) {
-            session()->message = "O usuario informado não está cadastrado";
+            session()->set("message","O usuario informado não está cadastrado");
             return null;
         }
 
         if (!password_verify($credentials->password, $user->password)) {
-            session()->message = "A senha informada não confere";
+            session()->set("message","A senha informada não confere");
             return null;
         }
 

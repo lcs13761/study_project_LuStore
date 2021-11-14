@@ -6,6 +6,7 @@ namespace Source\App;
 use Pecee\Http\Input;
 use Pecee\Http\Request;
 use Source\Core\Controller;
+use Source\Models\Auth;
 use Source\Support\Validate;
 use Webmozart\Assert\Assert;
 
@@ -14,6 +15,9 @@ class AuthController extends Controller
 
     public function index()
     {
+        if(auth()){
+            redirect("/");
+        }
 
         $head = $this->seo->render(
             CONF_SITE_NAME . " | singIn",
@@ -31,18 +35,31 @@ class AuthController extends Controller
 
     public function login()
     {
+        if(auth()){
+            redirect("/");
+        }
+
         if (!input()->value("_token") || !csrf_verify(input()->value("_token")))  return  redirect(abort("error"));
-        $validated = (new Validate())->make(input()->all(),[
+        $validated = (new Validate())->make(input()->all(), [
             "email" => ["email"],
             "password" => ["string"],
         ]);
 
-        if($validated->fails()){
-            return  redirect( url_back());
+        if ($validated->fails()) {
+            return  redirect(url_back());
         }
+
+        $auth = (new Auth())->attempt(input()->all());
+        if (!$auth) {
+            redirect("/login");
+        }
+
+        redirect("/");
     }
 
-    public function logout(){
-        
+    public function logout()
+    {
+        Auth::logout();
+        redirect("/login");
     }
 }

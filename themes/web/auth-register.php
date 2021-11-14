@@ -1,10 +1,10 @@
 <?php $v->layout("web/template/layout"); ?>
 
-<section class="vh-100 d-flex justify-content-center align-items-center">
-  <div class="card bg-dark shadow-lg p-4 me-sm-1 ">
+<section class="mt-5 d-flex justify-content-center align-items-center">
+  <div style="max-width: 360px; width: 360px;" class="card mx-1 bg-dark shadow-lg p-4 me-sm-1 ">
     <h3 class="h3 text-light mt-1 mb-4 text-center">Create</h3>
     <?= errors_validation() ?>
-    <form name="login" class="d-flex flex-column" style="min-width: 300px" method="POST" action="<?= url("/user"); ?>">
+    <form name="login" class="d-flex flex-column" method="POST" action="<?= url("/user"); ?>">
       <?= csrf_field(); ?>
       <label>
         <span class="text-light">Nome:</span>

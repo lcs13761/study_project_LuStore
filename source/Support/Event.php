@@ -23,7 +23,7 @@ class Event
     $message = $this->view->render("confirm", [
       "name" => ucfirst($user->name),
       "button" => "CONFIRMAR E-MAIL",
-      "confirm_link" => CONF_URL_BASE . "/verifiy/" . $user->email_verified
+      "confirm_link" => CONF_URL_BASE . "/email/verify/". $user->id. "/" . $user->email_verified
     ]);
 
     $this->email->bootstrap(
@@ -35,4 +35,6 @@ class Event
 
     return true;
   }
+
+
 }

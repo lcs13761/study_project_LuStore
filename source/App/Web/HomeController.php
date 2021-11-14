@@ -18,7 +18,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-
+        
         $head = $this->seo->render(
             "Site Modelo  .Conheca a " . CONF_SITE_NAME,
             CONF_SITE_DESC,

@@ -7,7 +7,7 @@
             <h1><?= $data->title; ?></h1>
             <p class = "mx-3"><?= $data->desc; ?></p>
             <?php if (!empty($data->link)): ?>
-                <a class="d-inline-block btn gradient gradient-green gradient-hover radius"
+                <a class="d-inline-block btn bg-primary radius"
                    href="<?= $data->link; ?>" title="<?= $data->linkTitle; ?>"><?= $data->linkTitle; ?></a>
             <?php endif; ?>
         </div>

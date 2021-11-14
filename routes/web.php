@@ -10,22 +10,24 @@ SimpleRouter::group(['prefix' => '/'], function () {
   SimpleRouter::group(["namespace" => "Auth"], function () {
 
     SimpleRouter::get("/confirma","VerifyEmailController@index"); 
-    SimpleRouter::get("/verifiy/{token}" , "VerifyEmailController@verifiy");
-    
-
+    SimpleRouter::get("email/verify/{id}/{token}" , "VerifyEmailController@verifiy");
   });
 
   
 
     SimpleRouter::get("/login", "AuthController@index");
     SimpleRouter::post("/login", "AuthController@login");
-
+    SimpleRouter::get("/logout","AuthController@logout");
     
 
     SimpleRouter::group(["namespace" => "Web"], function () {
+
         SimpleRouter::get("/", "HomeController@index");
 
-        SimpleRouter::get("/user", "UserController@index");
-        SimpleRouter::post("/user", "UserController@store");
+        SimpleRouter::group(["prefix" => "user"],function(){
+          SimpleRouter::get("/create", "UserController@create");
+          SimpleRouter::post("/", "UserController@store");
+        });
+      
     });
 });
