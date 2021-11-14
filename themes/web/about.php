@@ -38,5 +38,5 @@
 </section>
 
 <?php $v->start("scripts"); ?>
-<script src="<?= theme2("node_modules/jquery/dist/jquery.js"); ?>"></script>
+<script src="<?= theme("node_modules/jquery/dist/jquery.js"); ?>"></script>
 <?php $v->end(); ?>

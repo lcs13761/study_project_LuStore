@@ -69,22 +69,18 @@ abstract class Model
         return $this;
     }
 
-    public function auth($email)
+    public function auth(string $email)
     {
-
-        $this->query = "SELECT * FROM {$this->table} WHERE email = '$email'";
+        $this->query = "SELECT * FROM {$this->table} WHERE email = :email";
+        parse_str("email={$email}", $this->params);
         return $this->fetch();
     }
 
-    public function find($id)
+    public function find(int $id)
     {
-        try {
-            $stmt = Connect::getInstance()->prepare("SELECT * FROM {$this->table} WHERE id = :id");
-            $stmt->bindValue(":id", $id);
-            $stmt->execute();
-            return $stmt->fetchObject(static::class);
-        } catch (\PDOException $exception) {
-        }
+        $this->query = "SELECT * FROM {$this->table} WHERE id = :id";
+        parse_str("id={$id}", $this->params);
+        return  $this->fetch();
     }
 
     public function where(string $column, string $value, $expression = "=")
@@ -136,13 +132,19 @@ abstract class Model
     {
         try {
             $stmt = Connect::getInstance()->prepare($this->query . $this->order . $this->limit . $this->offset);
-            $stmt->execute();
+            $stmt->execute($this->params);
+
+            if (!$stmt->rowCount()) {
+                return null;
+            }
+
             if ($all) {
                 return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
             }
             return $stmt->fetchObject(static::class);
         } catch (\PDOException $exception) {
             throw new \PDOException($exception->getMessage(), (int)$exception->getCode());
+            return null;
         }
     }
 
@@ -165,14 +167,20 @@ abstract class Model
             return null;
         }
     }
-    
-    public function update(?string $terms = null, ?string $params = null, ?string $columns = null)
+
+    public function update(?array $data = null)
     {
         try {
-            $stmt = Connect::getInstance()->prepare("UPDATE {$this->table} SET {$terms} {$params}");
-            $stmt->execute();
+            $dataSet =  $this->search($data);
+            $dataSet = implode(", ", $dataSet);
+            $stmt = Connect::getInstance()->prepare("UPDATE {$this->table} SET {$dataSet} WHERE id = :id");
+            $stmt->bindValue(":id" , $this->id);
+            parse_str("id={$this->id}",$this->params);
+            $stmt->execute(array_merge($data,$this->params));
+            return ($stmt->rowCount() ?? 1);
         } catch (\PDOException $exception) {
-            redirect("/ops/problemas");
+            throw new \PDOException($exception->getMessage(), (int)$exception->getCode());
+            return null;
         }
     }
 
@@ -186,19 +194,37 @@ abstract class Model
         }
     }
 
-      /**
-     * @param array $data
-     * @return array|null
-     */
-    private function filter(array $data): ?array
+    public function search(array $data): array
     {
-        $filter = [];
+        $dataSet = [];
         foreach ($data as $key => $value) {
-            $filter[$key] = (is_null($value) ? null : filter_var($value, FILTER_DEFAULT));
+            if (!in_array($key, $this->protected) && in_array($key,$this->fillable)) {
+                $dataSet[] = "{$key} = :{$key}";
+            }
         }
-        return $filter;
+        return $dataSet;
     }
 
+    // /**
+    //  * @param array $data
+    //  * @return array|null
+    //  */
+    // private function filter(array $data): ?array
+    // {
+    //     $filter = [];
+    //     foreach ($data as $key => $value) {
+    //         $filter[$key] = (is_null($value) ? null : filter_var($value, FILTER_DEFAULT));
+    //     }
+    //     return $filter;
+    // }
+
+    public function safe(): array {
+        $safe = (array)$this->data;
+        foreach ($this->protected as $unset){
+            unset($safe[$unset]);
+        }
+        return $safe;
+    }
 
     /**
      * @return bool

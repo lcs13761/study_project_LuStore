@@ -174,6 +174,12 @@ if (!function_exists('auth')) {
 
     function auth()
     {
+        $session = new Session();
+        if (!$session->has("authUser")) {
+            return null;
+        }
+        
+        return $session->has("authUser");
     }
 }
 

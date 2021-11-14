@@ -1,10 +1,10 @@
 <?php $v->layout("web/template/layout"); ?>
 
-<section class="vh-100 d-flex justify-content-center align-items-center">
-  <div class="card bg-dark shadow-lg px-4 pt-4 me-sm-1 ">
+<section class="d-flex justify-content-center mt-5 align-items-center">
+  <div style="max-width: 360px; width: 360px;" class="card mx-1 bg-dark shadow-lg px-4 pt-4">
     <h3 class="h3 text-light mt-1 mb-4 text-center">Login</h3>
     <?= errors_validation() ?>
-    <form name="login" class="d-flex flex-column" style="min-width: 300px" method="POST" action="<?= url("/login"); ?>">
+    <form name="login" class="d-flex flex-column" method="POST" action="<?= url("/login"); ?>">
       <?= csrf_field(); ?>
       <label>
         <span class="text-light">Email:</span>
@@ -23,6 +23,6 @@
       </label>
       <button class="btn btn-primary ">Sign in</button>
     </form>
-    <p class="text-light pt-3">Não Possui uma conta? <a href="<?= url("/user") ?>">Criar conta</a></p>
+    <p class="text-light pt-3">Não Possui uma conta? <a href="<?= url("user/create") ?>">Criar conta</a></p>
   </div>
 </section>
