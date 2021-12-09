@@ -210,3 +210,114 @@
 {
     margin-top:120px;
 }
+
+.hero-slider {
+	background: #fff;
+	overflow: hidden;
+}
+.hero-slider .single-slider {
+	height: auto;
+	background-image: url('/storage/image/bann.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+    height: 510px;
+}
+.hero-slider .text-inner {
+	
+}
+.hero-slider .hero-text {
+	padding: 0 30px;
+	margin-top:100px;
+}
+.hero-slider .hero-text h1 {
+	line-height: 50px;
+	font-size: 47px;
+	font-weight: 700;
+	color: #F7941D;
+	margin-bottom: 20px;
+}
+.hero-slider .hero-text h1 span {
+	font-size: 20px;
+	display: block;
+	margin-bottom: 12px;
+	color: #333;
+	font-weight: 700;
+	line-height: initial;
+}
+.hero-slider .hero-text p {
+	color: #333;
+	margin-bottom: 35px;
+}
+.hero-slider .hero-text .button{
+	margin:0;
+}
+.hero-slider .hero-text .btn {
+	color: #fff;
+	background: #333;
+	padding: 13px 30px;
+	line-height: initial;
+	border: none;
+	height: auto;
+	z-index: 0;
+}
+.hero-slider .hero-text .btn:hover{
+	background:#F7941D;
+	color:#fff;
+}
+
+/*======================================
+   Start Small Banner CSS
+========================================*/ 
+.small-banner{
+	padding:30px 0;
+	padding-bottom:0;
+}
+.small-banner .single-banner {
+	overflow:hidden;
+	position:relative;
+}
+.small-banner .single-banner img{
+	height:100%;
+	width:100%;
+	-webkit-transition:all 0.4s ease;
+	-moz-transition:all 0.4s ease;
+	transition:all 0.4s ease;
+}
+.small-banner .single-banner .content {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	padding-left: 35px;
+}
+.small-banner .single-banner h3 {
+	font-size: 22px;
+	font-weight: 700;
+	text-transform: capitalize;
+	color: #333;
+}
+.small-banner .single-banner h3 span{
+	color:#F7941D;
+}
+.small-banner .single-banner p {
+	font-size: 14px;
+	color: #F7941D;
+	font-weight: 500;
+	margin-bottom: 100px;
+	text-transform: capitalize;
+}
+.small-banner .single-banner a {
+	color: #333;
+	margin-top: 22px;
+	display: block;
+	font-size: 12px;
+	font-weight:500;
+	display: inline-block;
+	text-transform:uppercase;
+	border-bottom:2px solid #333;
+}
+.small-banner .single-banner a:hover{
+	color:#F7941D;
+	border-color:#F7941D;
+}

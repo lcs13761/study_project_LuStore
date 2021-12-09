@@ -18,14 +18,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        
         $head = $this->seo->render(
             "Site Modelo  .Conheca a " . CONF_SITE_NAME,
             CONF_SITE_DESC,
             url(),
             ""
         );
-       
+
         echo $this->view->render("web/home", [
             // "product" => $product,
             "head" => $head,
@@ -33,4 +32,6 @@ class HomeController extends Controller
             // "banner" => $banner
         ]);
     }
+
+    public function show() {}
 }
