@@ -2,29 +2,30 @@
 
 namespace Source\Core;
 
+use JetBrains\PhpStorm\Pure;
+
 abstract class Model
 {
-    protected $protected;
+    protected array $protected = [];
 
-    protected $table;
+    protected string $table = '';
 
-    protected $data;
+    protected object $data;
+
+    protected array $fillable = [];
+
+    protected string $order = '';
 
     protected $params;
 
-    protected $fillable;
-
-    protected $order;
-
     protected $offset;
-
-    protected $fecth;
-
-    protected $column;
 
     protected $limit;
 
     protected $last_id;
+
+    private string $query = '';
+
 
     /**
      * @param $name
@@ -43,7 +44,7 @@ abstract class Model
      * @param $name
      * @return bool
      */
-    public function __isset($name)
+   final public function __isset($name): bool
     {
         return isset($this->data->$name);
     }
@@ -52,12 +53,12 @@ abstract class Model
      * @param $name
      * @return null
      */
-    public function __get($name)
+   final public function __get($name): mixed
     {
         return ($this->data->$name ?? null);
     }
 
-    public function data(): ?object
+   final public function data(): ?object
     {
         return $this->data;
     }
@@ -76,33 +77,43 @@ abstract class Model
         return $this->fetch();
     }
 
-    public function find(int $id)
+    public function find(int|string $id): mixed
     {
-        $this->query = "SELECT * FROM {$this->table} WHERE id = :id";
+        $this->query = "SELECT * FROM {$this->table} WHERE id = :id or auth_id = :id";
         parse_str("id={$id}", $this->params);
         return  $this->fetch();
     }
 
-    public function where(string $column, string $value, $expression = "=")
+    final public function where(string $column, string $value,string $expression = "="): Model
     {
         $this->query = "SELECT * FROM {$this->table} WHERE {$column} {$expression} '{$value}'";
+        return $this;
+    }
+
+   final public function andWhere(string $column,string  $value,string $expression = '='): Model{
+        $this->query =  $this->query . " AND {$column} {$expression} '{$value}'";
+        return $this;
+    }
+
+    final public function orWhere(string $column,string  $value,string $expression = '='): Model{
+        $this->query =  $this->query . " OR {$column} {$expression} '{$value}'";
         return $this;
     }
     /**
      * define a ordem
      */
-    public function order(string $columnsOrder): Model
+    final public function order(string $columnsOrder): Model|null
     {
         try {
             $this->order = " ORDER BY {$columnsOrder}";
             return $this;
         } catch (\PDOException $exception) {
-            redirect("/ops/problemas");
+                return null;
         }
     }
 
     /**define o limit para exibir */
-    public function limit(int $limit): Model
+    final public function limit(int $limit): Model
     {
         try {
 
@@ -114,21 +125,22 @@ abstract class Model
 
         return $this;
     }
+
     /**definir aparti de qual posicao inicia a contag */
-    public function offset(int $offset): Model
+    final public function offset(int $offset): Model
     {
         $this->offset = " OFFSET {$offset}";
         return $this;
     }
 
-    public function count(?string $params = null)
+   final public function count(?string $params = null): int
     {
         $stmt = Connect::getInstance()->prepare($this->query);
         $stmt->execute($this->params);
         return $stmt->rowCount();
     }
 
-    public function fetch(bool $all = false)
+    final public function fetch(bool $all = false): mixed
     {
         try {
             $stmt = Connect::getInstance()->prepare($this->query . $this->order . $this->limit . $this->offset);
@@ -143,12 +155,11 @@ abstract class Model
             }
             return $stmt->fetchObject(static::class);
         } catch (\PDOException $exception) {
-            throw new \PDOException($exception->getMessage(), (int)$exception->getCode());
             return null;
         }
     }
 
-    public function create(array $values)
+    final public function create(array $values): ?Model
     {
         try {
             $save = [];
@@ -168,7 +179,7 @@ abstract class Model
         }
     }
 
-    public function update(?array $data = null)
+    final public function update(?array $data = null): ?int
     {
         try {
             $dataSet =  $this->search($data);
@@ -179,21 +190,30 @@ abstract class Model
             $stmt->execute(array_merge($data,$this->params));
             return ($stmt->rowCount() ?? 1);
         } catch (\PDOException $exception) {
-            throw new \PDOException($exception->getMessage(), (int)$exception->getCode());
             return null;
         }
     }
 
-    public function delete(?string $params, ?string $terms, ?string $columns = null)
+    /**
+     * @param string|null $params
+     * @param string|null $terms
+     * @param string|null $columns
+     * @return void|null
+     */
+    final public function delete(?string $params, ?string $terms, ?string $columns = null)
     {
         try {
             $stmt = Connect::getInstance()->prepare("DELETE FROM {$this->table} WHERE {$params} '{$terms}'");
             $stmt->execute();
         } catch (\PDOException $exception) {
-            redirect("/ops/problemas");
+            return null;
         }
     }
 
+    /**
+     * @param array $data
+     * @return array
+     */
     public function search(array $data): array
     {
         $dataSet = [];
@@ -218,7 +238,7 @@ abstract class Model
     //     return $filter;
     // }
 
-    public function safe(): array {
+    final public function safe(): array {
         $safe = (array)$this->data;
         foreach ($this->protected as $unset){
             unset($safe[$unset]);
@@ -229,7 +249,7 @@ abstract class Model
     /**
      * @return bool
      */
-    protected function required(): bool
+    #[Pure]private function required(): bool
     {
         $data = (array)$this->data();
         foreach ($this->fillable as $field) {

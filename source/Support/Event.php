@@ -26,7 +26,7 @@ class Event
       "confirm_link" => CONF_URL_BASE . "/email/verify/". $user->id. "/" . $user->email_verified
     ]);
 
-    $this->email->bootstrap(
+    $status = $this->email->bootstrap(
       "Ative sua conta no " . CONF_SITE_NAME,
       $message,
       $user->email,

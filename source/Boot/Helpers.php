@@ -6,6 +6,7 @@ use Pecee\SimpleRouter\SimpleRouter as Router;
 use Pecee\Http\Url;
 use Pecee\Http\Response;
 use Pecee\Http\Request;
+use Source\Models\User;
 
 if (!function_exists('abort')) {
 
@@ -97,18 +98,18 @@ function url_back(): string
  * theme
  * @return string
  */
-function theme(string $path = null): string
+function theme(string $path = null,$theme =  CONF_VIEW_THEME): string
 {
     if (strpos($_SERVER["HTTP_HOST"], "localhost")) {
         if ($path) {
-            return CONF_URL_TEST . "/themes/" . CONF_VIEW_THEME . "/" .  ($path[0] == "/" ? mb_substr($path, 1) : $path);
+            return CONF_URL_TEST . "/themes/{$theme}/" .  ($path[0] == "/" ? mb_substr($path, 1) : $path);
         }
-        return CONF_URL_TEST . "/themes/" . CONF_VIEW_THEME;
+        return CONF_URL_TEST . "/themes/{$theme}";
     }
     if ($path) {
-        return CONF_URL_BASE . "/themes/" . CONF_VIEW_THEME . "/" . ($path[0] == "/" ? mb_substr($path, 1) : $path);
+        return CONF_URL_BASE . "/themes/{$theme}/" . ($path[0] == "/" ? mb_substr($path, 1) : $path);
     }
-    return CONF_URL_BASE . "/themes/" . CONF_VIEW_THEME;
+    return CONF_URL_BASE . "/themes/{$theme}";
 }
 
 
@@ -179,7 +180,7 @@ if (!function_exists('auth')) {
             return null;
         }
         
-        return $session->has("authUser");
+        return (new User())->find($session->authUser);
     }
 }
 
@@ -196,7 +197,7 @@ if (!function_exists("errors_validation")) {
             $errors = session()->validate;
             session()->unset("validate");
             foreach ($errors as $key => $value) {
-                echo "<p  class='text-light'>{$value}</p>";
+                echo "<p  class='text-dark'>{$value}</p>";
             }
             return;
         }
@@ -204,7 +205,37 @@ if (!function_exists("errors_validation")) {
         if(session()->message){
             $message = session()->message;
             session()->unset("message");
-            return "<p  class='text-light'>{$message}</p>";
+            return "<p  class='text-dark'>{$message}</p>";
         }
     }
 }
+
+
+if(!function_exists('tokenEmailVerification')) {
+
+    function tokenEmailVerification($email): bool|string
+    {
+        return  hash("sha256", base64_encode($email));
+    }
+}
+
+
+/**
+ * ####################
+ * ###   PASSWORD   ###
+ * ####################
+ */
+
+/**
+ * @param string $password
+ * @return string
+ */
+function passwd(string $password): string
+{
+    if (!empty(password_get_info($password)['algo'])) {
+        return $password;
+    }
+
+    return password_hash($password, CONF_PASSWD_ALGO, CONF_PASSWD_OPTION);
+}
+
