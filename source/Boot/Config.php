@@ -27,7 +27,7 @@ define("MAIL_MAILER","smtp");
 define("MAIL_HOST","smtp.sendgrid.net");
 define("MAIL_PORT",587);
 define("MAIL_USERNAME","apikey");
-define("MAIL_PASSWORD","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");
+define("MAIL_PASSWORD","");
 define("MAIL_ENCRYPTION","tls");
 define("MAIL_FROM_ADDRESS","lucasdevjr@lucasdevjr.com.br");
 define("MAIL_FROM_NAME","LuStore");
