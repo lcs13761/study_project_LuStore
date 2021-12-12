@@ -14,8 +14,8 @@ define("CONF_URL_TEST" , "http://localhost/");
  * Authorization Google
  */
 define("CONF_GOOGLE",[
-  'clientId'     => '235966637510-0efl90o6in8rtarc9kf27svl5at0c8he.apps.googleusercontent.com',
-  'clientSecret' => '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',
+  'clientId'     => '',
+  'clientSecret' => '',
   'redirectUri'  => 'http://localhost/login/google',
 ]);
 
