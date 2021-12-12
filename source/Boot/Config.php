@@ -6,22 +6,30 @@ define("CONF_DB_USER","root");
 define("CONF_DB_NAME","lutest");
 define("CONF_DB_PASSWD","root");
 
-define("CONF_URL_BASE","http://www.localhost:8080");
-define("CONF_URL_TEST" , "http://www.localhost:8080");
+define("CONF_URL_BASE","http://localhost/");
+define("CONF_URL_TEST" , "http://localhost/");
 
 
+/**
+ * Authorization Google
+ */
+define("CONF_GOOGLE",[
+  'clientId'     => '235966637510-0efl90o6in8rtarc9kf27svl5at0c8he.apps.googleusercontent.com',
+  'clientSecret' => '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',
+  'redirectUri'  => 'http://localhost/login/google',
+]);
 
 /**
  * MAIL
  */
 
 define("MAIL_MAILER","smtp");
-define("MAIL_HOST","smtp.gmail.com");
+define("MAIL_HOST","smtp.sendgrid.net");
 define("MAIL_PORT",587);
-define("MAIL_USERNAME","lcs13761@gmail.com");
-define("MAIL_PASSWORD","mpylgbilvfxdpggn");
+define("MAIL_USERNAME","apikey");
+define("MAIL_PASSWORD","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");
 define("MAIL_ENCRYPTION","tls");
-define("MAIL_FROM_ADDRESS","lcs13761@gmail.com");
+define("MAIL_FROM_ADDRESS","lucasdevjr@lucasdevjr.com.br");
 define("MAIL_FROM_NAME","LuStore");
 
 /**
@@ -58,3 +66,11 @@ define("CONF_SITE_ADDR_COMPLEMENT", "");
 define("CONF_SITE_ADDR_CITY", "Altamira");
 define("CONF_SITE_ADDR_STATE", "PA");
 define("CONF_SITE_ADDR_ZIPCODE", "68374-732");
+
+
+/**
+ * Passoword
+ */
+
+define("CONF_PASSWD_ALGO", PASSWORD_DEFAULT);
+define("CONF_PASSWD_OPTION", ["cost" => 10]);

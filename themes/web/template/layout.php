@@ -8,10 +8,10 @@
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-    <link rel="stylesheet" href="<?= theme("assets/css/styles.css"); ?>">
-    <link rel="stylesheet" href="<?= theme("assets/css/style.css"); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <?= $v->section("styles"); ?>
+    <link rel="stylesheet" href="<?= theme("assets/css/style.css"); ?>">
+    <link rel="stylesheet" href="<?= theme("assets/css/styles.css"); ?>">
     <?= $head; ?>
 </head>
 
@@ -53,7 +53,7 @@
                             <?php if (auth()) : ?>
                                 <li class="nav-item mx-1 align-self-lg-center"><a class=" btn-primary nav-link p-2 rounded text-light" href="<?= url("/logout") ?>">SingOut</a></li>
                             <?php else : ?>
-                                <li class="nav-item align-self-lg-center mx-1"><a class=" btn-primary nav-link text-light p-2 rounded" href="<?= url("/login") ?>">SinIn</a></li>
+                                <li class="nav-item align-self-lg-center mx-1"><a class=" btn-primary nav-link text-light p-2 rounded" href="<?= url("/login") ?>">Login</a></li>
                             <?php endif; ?>
                         </ul>
                     </div>
@@ -155,6 +155,7 @@
     <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+      <?= $v->section("scripts"); ?>
 </body>
 
 </html>

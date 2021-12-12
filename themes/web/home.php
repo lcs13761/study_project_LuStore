@@ -35,7 +35,7 @@
       <!-- Single Banner  -->
       <div class="col-lg-4 col-md-6 col-12">
         <div class="single-banner">
-          <img src="/storage/image/man.jpg" alt="#">
+          <img src="/storage/image/man.png" alt="#">
           <div class="content">
             <p>Coleção Masculina</p>
             <a href="#">Discover Now</a>
@@ -46,7 +46,7 @@
       <!-- Single Banner  -->
       <div class="col-lg-4 col-md-6 col-12">
         <div class="single-banner">
-          <img src="https://via.placeholder.com/600x370" alt="#">
+          <img src="/storage/image/fem.png" alt="#">
           <div class="content">
             <p>Coleção Feminina</p>
             <a href="#">Discover Now</a>
@@ -57,7 +57,7 @@
       <!-- Single Banner  -->
       <div class="col-lg-4 col-12">
         <div class="single-banner tab-height">
-          <img src="https://via.placeholder.com/600x370" alt="#">
+          <img src="/storage/image/bolsa.png" alt="#">
           <div class="content">
             <p>Coleção de Bolsas</p>
             <a href="#">Discover Now</a>

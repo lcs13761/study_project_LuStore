@@ -6,6 +6,7 @@ use Pecee\SimpleRouter\SimpleRouter;
 
 require __DIR__ . "/vendor/autoload.php";
 require_once 'routes/web.php';
+require_once 'routes/admin.php';
 
 use Source\Core\Session;
 

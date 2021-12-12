@@ -3,18 +3,26 @@
 
 namespace Source\Models;
 
+use DateTime;
 use Source\Core\Model;
 
 class User extends Model 
 {
-    protected $fillable = ["name","email","password","email_verified"];
-    protected $table = "users";
-    protected $protected = ["id","created_at","updated_at","level"];
+    protected array $fillable = ['auth_id',"photo","name","email","password","email_verified","email_verification_at"];
+    protected string $table = "users";
+    protected array $protected = ["id","created_at","updated_at","level"];
 
 
-    public function hasVerifiedEmail(){
-        
-        return $this->update(["email_verified" => null]);
+    public function hasVerifiedEmail(): int
+    {
+
+        return $this->update(["email_verified" => null,"email_verification_at" => $this->timeNow()]);
     }
-    
+
+    public function timeNow(): string
+    {
+        date_default_timezone_set('America/Sao_Paulo');
+        return date('Y-m-d H:i:s');
+    }
+
 }
