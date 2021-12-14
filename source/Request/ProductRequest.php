@@ -4,17 +4,19 @@ namespace Source\Request;
 
 use Source\Core\FormRequest;
 
-class UserRequest extends FormRequest
+class ProductRequest extends FormRequest
 {
-
     public function rules()
     {
         switch ($this->method) {
             case 'POST':
             {
                 return [
-                    'name' => ['required', 'string'],
-                    'email' => ['required', 'email', 'unique:email,user'],
+                    'product' => ['required', 'string'],
+                    'description' => ['required', 'string'],
+                    'value' => ['required', 'numeric'],
+                    'size' => ['required', 'numeric'],
+                    'qts' => ['required', 'numeric']
                 ];
             }
             case 'PUT':
@@ -28,6 +30,4 @@ class UserRequest extends FormRequest
                 break;
         }
     }
-
-
 }

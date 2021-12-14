@@ -10,7 +10,7 @@ abstract class Model
 
     protected string $table = '';
 
-    protected object $data;
+    protected $data;
 
     protected array $fillable = [];
 
@@ -58,7 +58,7 @@ abstract class Model
         return ($this->data->$name ?? null);
     }
 
-   final public function data(): ?object
+   public function data(): ?object
     {
         return $this->data;
     }
@@ -76,6 +76,12 @@ abstract class Model
         parse_str("email={$email}", $this->params);
         return $this->fetch();
     }
+
+    public  function all(){
+        $this->query = "SELECT * FROM " . $this->table;
+        return (array)$this->fetch();
+    }
+
 
     public function find(int|string $id): mixed
     {
@@ -159,9 +165,11 @@ abstract class Model
         }
     }
 
-    final public function create(array $values): ?Model
+    final public function create(array|object $values)
     {
         try {
+
+            if(is_object($values)) $values = (array)$values;
             $save = [];
             foreach ($values as $key => $value) {
                 in_array($key, $this->fillable) ? $save[$key] = $value : "";
@@ -172,8 +180,8 @@ abstract class Model
             $stmt = Connect::getInstance()->prepare("INSERT INTO {$this->table} ({$columns}) VALUES ({$values})");
             $stmt->execute($save);
             $id = Connect::getInstance()->lastInsertId();
-            $this->data = $this->find($id)->data();
-            return $this;
+            $this->data = $this->find($id);
+            return $id;
         } catch (\PDOException $exception) {
             return null;
         }

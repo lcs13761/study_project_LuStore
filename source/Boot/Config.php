@@ -14,8 +14,8 @@ define("CONF_URL_TEST" , "http://localhost/");
  * Authorization Google
  */
 define("CONF_GOOGLE",[
-  'clientId'     => '235966637510-0efl90o6in8rtarc9kf27svl5at0c8he.apps.googleusercontent.com',
-  'clientSecret' => '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',
+  'clientId'     => '',
+  'clientSecret' => '',
   'redirectUri'  => 'http://localhost/login/google',
 ]);
 
@@ -27,7 +27,7 @@ define("MAIL_MAILER","smtp");
 define("MAIL_HOST","smtp.sendgrid.net");
 define("MAIL_PORT",587);
 define("MAIL_USERNAME","apikey");
-define("MAIL_PASSWORD","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");
+define("MAIL_PASSWORD","");
 define("MAIL_ENCRYPTION","tls");
 define("MAIL_FROM_ADDRESS","lucasdevjr@lucasdevjr.com.br");
 define("MAIL_FROM_NAME","LuStore");
