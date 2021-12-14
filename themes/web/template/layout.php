@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <?= $v->section("styles"); ?>
     <link rel="stylesheet" href="<?= theme("assets/css/style.css"); ?>">
+    <link href="<?= theme('assets/css/style.css', CONF_VIEW_ADMIN)  ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?= theme("assets/css/styles.css"); ?>">
     <?= $head; ?>
 </head>
@@ -51,7 +51,34 @@
                             <li class="nav-item mx-1"><a class="nav-link text-light" href="#about">About</a></li>
                             <!-- <li class="nav-item mx-1"><a class="nav-link text-light" href="#projects">Projects</a></li> -->
                             <?php if (auth()) : ?>
-                                <li class="nav-item mx-1 align-self-lg-center"><a class=" btn-primary nav-link p-2 rounded text-light" href="<?= url("/logout") ?>">SingOut</a></li>
+                                <li class="dropdown nav-item mx-1 align-self-lg-center">
+                                    <a class="sidebar-brand  dropdown-toggle d-flex align-items-center justify-content-center" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img class="img-profile  icon-circle " src="<?= theme('assets/img/undraw_profile.svg', CONF_VIEW_ADMIN) ?>">
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow " aria-labelledby="userDropdown">
+                                        <a class="dropdown-item" href="/admin">
+                                            <i class="fas fa-fw fa-tachometer-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Dashboard
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Perfil
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Configurações
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Atividades
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="logout">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Sair
+                                        </a>
+                                    </div>
+                                </li>
                             <?php else : ?>
                                 <li class="nav-item align-self-lg-center mx-1"><a class=" btn-primary nav-link text-light p-2 rounded" href="<?= url("/login") ?>">Login</a></li>
                             <?php endif; ?>
@@ -147,14 +174,9 @@
     </footer>
     <!-- /End Footer Area -->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="<?= theme('js/scripts.js'); ?>"></script>
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <!-- * *                               SB Forms JS                               * *-->
-    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+    <script src="<?= theme('assets/jquery/jquery.min.js', CONF_VIEW_ADMIN) ?>"></script>
+    <script src="<?= theme('assets/bootstrap/js/bootstrap.bundle.min.js', CONF_VIEW_ADMIN) ?>"></script>
       <?= $v->section("scripts"); ?>
 </body>
 

@@ -8,21 +8,28 @@ use Source\Support\Validate;
 abstract class FormRequest
 {
     protected string $method;
-    protected object $data;
+    protected $data;
 
 
     /**
      * @throws Exception
      */
     public function __construct(){
-        $this->method = request()->getLoadedRoute()->getRequestMethods()[0];
+        $this->method = strtoupper(request()->getLoadedRoute()->getRequestMethods()[0]);
         $this->data = (object)input()->all();
         $this->csrf_verification();
     }
 
+    public function all(){
+        return (array)$this->data;
+    }
+
    final public function validation(): bool
    {
-        return Validate::make((array)$this->data,$this->rules());
+       if(method_exists($this, 'rules')){
+           return Validate::make((array)$this->data, $this->rules());
+       }
+            return true;
     }
 
     public function __set($name, $value)
@@ -51,13 +58,5 @@ abstract class FormRequest
         if (!csrf_verify($this->_token)) throw new Exception('csrf error');
     }
 
-    /**
-     * @return array
-     */
-    public function rules(){
-
-        return [];
-
-    }
 
 }

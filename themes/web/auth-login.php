@@ -4,7 +4,7 @@
 <?php $v->start("styles"); ?>
    <link href="<?=theme('assets/fontawesome-free/css/all.min.css', CONF_VIEW_ADMIN) ?>" rel="stylesheet" type="text/css">
    <!-- Custom styles for this template-->
-    <link href="<?= theme('assets/css/sb-admin-2.css', CONF_VIEW_ADMIN)  ?>" rel="stylesheet">
+    <link href="<?= theme('assets/css/style.css', CONF_VIEW_ADMIN)  ?>" rel="stylesheet">
 <?php $v->end(); ?>
 <section>
 <div class="container">

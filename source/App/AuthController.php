@@ -70,9 +70,9 @@ class AuthController extends Controller
             if (!empty($auth->error)) echo 'aa';
 
             $auth = $auth->user();
-            $verify_email = $user->where('email',$auth->getEmail())->count();
+            $verify_email = $user->where('email',$auth->getEmail())->andWhere('auth_id',$auth->getId(),'!=')->count();
             if (!$user->find($auth->getId()) && !$verify_email > 0) {
-                $result = $user->create([
+                $user->create([
                     'auth_id' => $auth->getId(),
                     "name" => $auth->getName(),
                     "email" =>  $auth->getEmail(),
@@ -81,7 +81,7 @@ class AuthController extends Controller
                     "email_verification_at" => $user->timeNow()
                 ]);
             }
-            if($verify_email > 0) redirect('login');
+            if($verify_email > 0) redirect('/login');
             (new Session())->set("authUser",  $auth->getId());
             redirect('/');
         }

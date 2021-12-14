@@ -15,7 +15,7 @@
     <link href="<?= theme('assets/fontawesome-free/css/all.min.css', CONF_VIEW_ADMIN) ?>" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Custom styles for this template-->
-    <link href=" <?= theme('assets/css/sb-admin-2.min.css', CONF_VIEW_ADMIN) ?>" rel="stylesheet">
+    <link href=" <?= theme('assets/css/style.css', CONF_VIEW_ADMIN) ?>" rel="stylesheet">
 
 </head>
 
@@ -67,7 +67,7 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/admin/product">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Produtos</span></a>
             </li>
@@ -295,9 +295,10 @@
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
 
                 <?= $v->section("content"); ?>
+                <!-- End of Topbar -->
+
                 <!-- /.container-fluid -->
 
             </div>

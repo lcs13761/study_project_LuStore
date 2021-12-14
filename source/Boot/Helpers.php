@@ -193,9 +193,11 @@ if (!function_exists("errors_validation")) {
 
     function errors_validation()
     {
-        if (session()->validate) {
-            $errors = session()->validate;
-            session()->unset("validate");
+
+
+        if (session()->errors) {
+            $errors = session()->errors;
+            session()->unset("error");
             foreach ($errors as $key => $value) {
                 echo "<p  class='text-dark'>{$value}</p>";
             }
@@ -210,6 +212,15 @@ if (!function_exists("errors_validation")) {
     }
 }
 
+
+if(!function_exists('errors')){
+
+    function errors() {
+        $errors = session()->errors;
+        session()->unset("errors");
+        return $errors;
+    }
+}
 
 if(!function_exists('tokenEmailVerification')) {
 
