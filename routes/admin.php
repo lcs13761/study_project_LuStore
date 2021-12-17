@@ -2,7 +2,6 @@
 
 use Pecee\SimpleRouter\SimpleRouter;
 
-
 SimpleRouter::group(['prefix' => '/admin','middleware' => Source\Support\MiddlewareAuth::class,'namespace' => 'admin'], function () {
 
       SimpleRouter::get('/','DashboardController@index');
@@ -25,5 +24,14 @@ SimpleRouter::group(['prefix' => '/admin','middleware' => Source\Support\Middlew
           SimpleRouter::put('/update/{id}','CategoryController@update')->name('category.update')->where(['id' => '[0-9]+']);
           SimpleRouter::delete('/destroy/{id}','CategoryController@destroy')->name('category.destroy')->where(['id' => '[0-9]+']);
       });
-
 });
+
+// /**perguntas&respostas */
+// $route->get("/perguntas-respostas", "Faq:home");
+// $route->post("/perguntas-respostas", "Faq:home");
+// $route->get("/perguntas-respostas/adicionar", "Faq:include");
+// $route->post("/perguntas-respostas/adicionar", "Faq:include");
+// $route->get("/perguntas-respostas/update", "Faq:update");
+// $route->post("/perguntas-respostas/update", "Faq:update");
+// $route->get("/perguntas-respostas/delete", "Faq:delete");
+// $route->post("/perguntas-respostas/delete", "Faq:delete");

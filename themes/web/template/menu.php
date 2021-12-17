@@ -21,13 +21,13 @@
                                                 <li><a href="checkout.html">Checkout</a></li>
                                             </ul> -->
                                         </li>
-                                        <li class=""><a class="p-4 nav-link text-white fs-6" href="#">Pages</a></li>
+                                        <li class=""><a class="p-4 nav-link text-white fs-6" href="#">Páginas</a></li>
                                         <li class=""><a class="p-4 nav-link text-white fs-6" href="#">Blog<i class="ti-angle-down"></i></a>
                                             <!-- <ul class="dropdown">
                                                 <li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
                                             </ul> -->
                                         </li>
-                                        <li class=""><a class="p-4 nav-link text-white fs-6" href="contact.html">Contact Us</a></li>
+                                        <li class=""><a class="p-4 nav-link text-white fs-6" href="contact.html">Entre em contato conosco</a></li>
                                     </ul>
                                 </div>
                             </div>

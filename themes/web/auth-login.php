@@ -52,10 +52,10 @@
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="forgot-password.html">Esqueceu sua senha?</a>
+                                <a class="small  text-decoration-none" href="<?= url('forgot.index') ?>">Esqueceu sua senha?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="/user/create">Crie a sua conta aqui!</a>
+                                <a class="small  text-decoration-none" href="<?= url('user.create') ?>">Crie a sua conta aqui!</a>
                             </div>
                         </div>
                     </div>
