@@ -180,7 +180,7 @@ if (!function_exists('auth')) {
             return null;
         }
         
-        return (new User())->find($session->authUser);
+        return User::find($session->authUser);
     }
 }
 
@@ -250,3 +250,23 @@ function passwd(string $password): string
     return password_hash($password, CONF_PASSWD_ALGO, CONF_PASSWD_OPTION);
 }
 
+
+function format_money(string $data): float
+{
+    if (strpos($data, ".")) {
+        $data = str_replace(".", "", $data);
+    }
+    if (strpos($data, ",")) {
+        $data = str_replace(",", ".", $data);
+    }
+    if(strpos($data, "$")){
+        $data = str_replace("R$", " ", $data);
+    }
+
+    return $data;
+}
+
+function money(float $value): string
+{
+    return number_format($value, 2, ',', '.');
+}

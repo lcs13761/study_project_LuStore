@@ -2,7 +2,7 @@
 
 namespace Source\Models;
 
-use Source\Core\Model;
+use Source\Core\Database\Model;
 use Source\Core\Session;
 
 class Auth extends Model

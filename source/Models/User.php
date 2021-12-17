@@ -3,8 +3,7 @@
 
 namespace Source\Models;
 
-use DateTime;
-use Source\Core\Model;
+use Source\Core\Database\Model;
 
 class User extends Model 
 {

@@ -25,7 +25,7 @@
                             <form class="user" method="post" action = 'login'>
                             <?= csrf_field(); ?>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user"
+                                    <input  type="email" class="form-control form-control-user"
                                         id="exampleInputEmail" required aria-describedby="emailHelp"
                                         placeholder="Insira o endereço de e-mail...">
                                 </div>

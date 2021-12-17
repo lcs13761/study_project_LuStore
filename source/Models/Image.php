@@ -2,7 +2,7 @@
 
 namespace Source\Model;
 
-use Source\Core\Model;
+use Source\Core\Database\Model;
 use Source\Core\Upload;
 
 class Image extends Model

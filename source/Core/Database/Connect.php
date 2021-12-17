@@ -1,12 +1,17 @@
 <?php
 
 
-namespace Source\Core;
+namespace Source\Core\Database;
+
+use const CONF_DB_HOST;
+use const CONF_DB_NAME;
+use const CONF_DB_PASSWD;
+use const CONF_DB_USER;
 
 class Connect
 {
     private const OPTIONS = [
-        // \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAME utf8",
+        \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'",
         \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
         \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
         \PDO::ATTR_CASE => \PDO::CASE_NATURAL

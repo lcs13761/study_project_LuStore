@@ -14,7 +14,7 @@ class MiddlewareAuth implements IMiddleware
     {
         $request->user = auth();
         if ($request->user === null) {
-            redirect('login');
+            redirect(url('login'));
         }
     }
 }

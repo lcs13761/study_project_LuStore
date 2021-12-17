@@ -55,11 +55,11 @@ $.extend( true, DataTable.defaults, {
 
 /* Default class modification */
 $.extend( DataTable.ext.classes, {
-	sWrapper:      "dataTables_wrapper dt-bootstrap4",
-	sFilterInput:  "form-control form-control-sm",
-	sLengthSelect: "custom-select custom-select-sm form-control form-control-sm",
+	sWrapper:      "dataTables_wrapper  form-inline justify-content-between dt-bootstrap4",
+	sFilterInput:  "form-control  input-sm",
+	sLengthSelect: "custom-select custom-select-sm form-control input-sm",
 	sProcessing:   "dataTables_processing card",
-	sPageButton:   "paginate_button page-item"
+	sPageButton:   "paginate_button page-item mt-lg-2"
 } );
 
 
@@ -92,7 +92,7 @@ DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, bu
 
 				switch ( button ) {
 					case 'ellipsis':
-						btnDisplay = '&#x2026;';
+						btnDisplay = '&hellip;';
 						btnClass = 'disabled';
 						break;
 
@@ -180,5 +180,9 @@ DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, bu
 };
 
 
+
 return DataTable;
+
 }));
+
+

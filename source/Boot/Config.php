@@ -6,8 +6,8 @@ define("CONF_DB_USER","root");
 define("CONF_DB_NAME","lutest");
 define("CONF_DB_PASSWD","root");
 
-define("CONF_URL_BASE","http://localhost/");
-define("CONF_URL_TEST" , "http://localhost/");
+define("CONF_URL_BASE","http://localhost");
+define("CONF_URL_TEST" , "http://localhost");
 
 
 /**
@@ -19,6 +19,17 @@ define("CONF_GOOGLE",[
   'redirectUri'  => 'http://localhost/login/google',
 ]);
 
+
+/**
+* Aws s3
+ */
+
+define('AWS_BUCKET','');
+define('AWS_KEY','');
+define('AWS_SECRET','');
+define('AWS_REGION','');
+
+
 /**
  * MAIL
  */
@@ -29,7 +40,7 @@ define("MAIL_PORT",587);
 define("MAIL_USERNAME","apikey");
 define("MAIL_PASSWORD","");
 define("MAIL_ENCRYPTION","tls");
-define("MAIL_FROM_ADDRESS","lucasdevjr@lucasdevjr.com.br");
+define("MAIL_FROM_ADDRESS","");
 define("MAIL_FROM_NAME","LuStore");
 
 /**
