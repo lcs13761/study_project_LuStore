@@ -24,7 +24,7 @@ define("CONF_GOOGLE",[
 * Aws s3
  */
 
-define('AWS_BUCKET','');
+define('AWS_BUCKET','lustore');
 define('AWS_KEY','');
 define('AWS_SECRET','');
 define('AWS_REGION','');
@@ -50,17 +50,6 @@ define("CONF_VIEW_PATH" , "/../../shared/view");
 define("CONF_VIEW_EXT", "php");
 define("CONF_VIEW_THEME", "web");
 define("CONF_VIEW_ADMIN", "admin");
-
-/**Uploads */
-define("CONF_UPLOAD_DIR","storage");
-define("CONF_UPLOAD_IMAGE_DIR","imagem");
-/**Imagem */
-/**
- * IMAGES
- */
-define("CONF_IMAGE_CACHE", CONF_UPLOAD_DIR . "/" . CONF_UPLOAD_IMAGE_DIR . "/cache");
-define("CONF_IMAGE_SIZE", 2000);
-define("CONF_IMAGE_QUALITY", ["jpg" => 75, "png" => 5]);
 
 
 /**

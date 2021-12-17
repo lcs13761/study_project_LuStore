@@ -1,26 +1,56 @@
 <?php $v->layout("web/template/layout"); ?>
 
-<section class="my-5 d-flex justify-content-center align-items-center">
-  <div style="max-width: 360px; width: 360px;" class="card mx-1 bg-dark shadow-lg p-4 me-sm-1 ">
-    <h3 class="h3 text-light mt-1 mb-4 text-center">Create</h3>
-    <?= errors_validation() ?>
-    <form name="login" class="d-flex flex-column" method="POST" action="<?= url("/user/store"); ?>">
+<div class="container">
 
-        <?= csrf_field(); ?>
-      <label>
-        <span class="text-light">Nome:</span>
-        <input type="text" autocomplete="autocomplete" class="form-control py-3 w-100" value="<?= ($cookie ?? null); ?>" name="name" required />
-      </label>
-      <label class=" mt-2">
-        <span class="text-light">E-mail:</span>
-        <input type="email" autocomplete="email" class="form-control py-3 w-100" value="<?= ($cookie ?? null); ?>" name="email" required />
-      </label>
-      <label class="mb-2 mt-2 ">
-        <span class="text-light">Senha:</span>
-        <input type="password" autocomplete="current-password" class="form-control py-3 w-100" name="password" required />
-      </label>
-      <button class="btn btn-primary mt-2">Create</button>
-    </form>
-    <p class="text-light pt-3">Possui uma conta? <a href="<?= url("login") ?>">Entrar</a></p>
-  </div>
-</section>
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Criar Conta!</h1>
+                        </div>
+                        <?= errors_validation() ?>
+                        <form name="login" class="d-flex flex-column" method="POST" action="<?= url("/user/store"); ?>">
+                            <?= csrf_field(); ?>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0 ">
+                                    <input type="text" class="form-control form-control-user p-2" id="exampleFirstName"
+                                           placeholder="Primeiro nome">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-user  p-2" id="exampleLastName"
+                                           placeholder="Ultimo nome">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control form-control-user  p-2" id="exampleInputEmail"
+                                       placeholder="E-mail">
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="password" class="form-control form-control-user  p-2"
+                                           id="exampleInputPassword" placeholder="Senha">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control form-control-user  p-2"
+                                           id="exampleRepeatPassword" placeholder="Repita senha">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-user btn-block">
+                                Registrar Conta
+                            </button>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            <a class="small text-decoration-none" href="<?= url("login") ?>">já tem uma conta? Conecte-se!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

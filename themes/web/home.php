@@ -38,7 +38,7 @@
           <img src="/storage/image/man.png" alt="#">
           <div class="content">
             <p>Coleção Masculina</p>
-            <a href="#">Discover Now</a>
+            <a href="#">Descubra agora</a>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
           <img src="/storage/image/fem.png" alt="#">
           <div class="content">
             <p>Coleção Feminina</p>
-            <a href="#">Discover Now</a>
+            <a href="#">Descubra agora</a>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@
           <img src="/storage/image/bolsa.png" alt="#">
           <div class="content">
             <p>Coleção de Bolsas</p>
-            <a href="#">Discover Now</a>
+            <a href="#">Descubra agora</a>
           </div>
         </div>
       </div>

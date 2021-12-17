@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <?= $v->section("styles"); ?>
+    <link href="<?= theme('assets/css/style.css')  ?>" rel="stylesheet">
     <link href="<?= theme('assets/css/style.css', CONF_VIEW_ADMIN)  ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?= theme("assets/css/styles.css"); ?>">
     <?= $head; ?>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-lg-2 col-md-3 col-12">
                         <ul class="navbar-nav ms-auto d-flex flex-row">
-                            <li class="nav-item mx-1"><a class="nav-link text-light" href="#about">About</a></li>
+                            <li class="nav-item mx-1"><a class="nav-link text-light" href="#about">Sobre</a></li>
                             <!-- <li class="nav-item mx-1"><a class="nav-link text-light" href="#projects">Projects</a></li> -->
                             <?php if (auth()) : ?>
                                 <li class="dropdown nav-item mx-1 align-self-lg-center">
