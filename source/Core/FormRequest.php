@@ -17,6 +17,13 @@ abstract class FormRequest
     public function __construct(){
         $this->method = strtoupper(request()->getLoadedRoute()->getRequestMethods()[0]);
         $this->data = (object)input()->all();
+        if(isset( request()->getLoadedRoute()->getParameters()['id'])){
+            $this->data->id = request()->getLoadedRoute()->getParameters()['id'];
+        }
+        if(isset($_FILES['image'])){
+            $this->data->image = $_FILES['image'];
+        }
+
         $this->csrf_verification();
     }
 
@@ -26,10 +33,14 @@ abstract class FormRequest
 
    final public function validation(): bool
    {
-       if(method_exists($this, 'rules')){
-           return Validate::make((array)$this->data, $this->rules());
+       if(method_exists($this,'attributes')){
+           $this->attributes();
        }
-            return true;
+       if(method_exists($this, 'rules')){
+           $validation = Validate::make((array)$this->data, $this->rules());
+       }
+       if(!$validation) return $validation;
+       return true;
     }
 
     public function __set($name, $value)

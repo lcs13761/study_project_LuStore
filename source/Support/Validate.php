@@ -5,6 +5,7 @@ namespace Source\Support;
 class Validate
 {
     private static bool $valid = true;
+    private static array $errors = array();
 
     public static function make(array $request, array $validate): bool
     {
@@ -19,19 +20,21 @@ class Validate
                     if ($valueValidated == "required") self::required($request[$key], $key);
                     if ($valueValidated == "email") self::email($request[$key], $key);
                     if ($valueValidated == "numeric") self::numeric($request[$key], $key);
+                    if ($valueValidated == "float") self::float($request[$key], $key);
                     if ($valueValidated == "string") self::string($request[$key], $key);
                     if (str_contains($valueValidated, "unique:")) self::unique($valueValidated, $request[$key], $key);
                 }
             }
         }
+        session()->set("errors", self::$errors);
         return self::$valid;
     }
 
     private static function notFound(string|int $key): void
     {
         self::$valid = false;
-        $message[$key][] = "$key não foi passado.";
-        session()->set("errors", $message);
+        self::$errors[$key][] = "$key não foi passado.";
+
     }
 
     private static function required(string $value, string $key): void
@@ -39,8 +42,7 @@ class Validate
 
         if (empty($value)) {
             self::$valid = false;
-            $message[$key][] = $key . "is required";
-            session()->set("errors", $message);
+            self::$errors[] = $key . "is required";
         }
     }
 
@@ -48,8 +50,7 @@ class Validate
     {
         if (false === filter_var($value, FILTER_VALIDATE_EMAIL)) {
             self::$valid = false;
-            $message[$key][] = "Invalid E-mail";
-            session()->set("errors", $message);
+            self::$errors[$key][] = "Invalid E-mail";
         }
     }
 
@@ -57,8 +58,15 @@ class Validate
     {
         if (!is_numeric($value)) {
             self::$valid = false;
-            $message[$key][] = "Invalid Number";
-            session()->set("errors", $message);
+            self::$errors[$key][] = "Invalid Number";
+        }
+    }
+
+    private static function float($value, string $key): void
+    {
+        if (!is_float($value)) {
+            self::$valid = false;
+            self::$errors[$key][] = "Invalid Number";
         }
     }
 
@@ -66,8 +74,7 @@ class Validate
     {
         if (!is_string($value)) {
             self::$valid = false;
-            $message[$key][] = "Invalid type string";
-            session()->set("errors", $message);
+            self::$errors[$key][] = "Invalid type string";
         }
     }
 
@@ -85,17 +92,17 @@ class Validate
         if (class_exists($model)) {
             $model = new $model();
             if (count($valuesCheck) > 2) {
+
                 $valueVerification = $valuesCheck[2];
                 $columnVerification = $valuesCheck[3];
-                $exists = $model->where($column, $value)->orWhere($columnVerification, $valueVerification, '!=');
+                $exists = $model->where($column, $value)->andWhere($columnVerification, $valueVerification, '!=');
             } else {
                 $exists = $model->where($column, $value);
             }
             if ($exists->count() > 0) {
 
                 self::$valid = false;
-                $message[$keyVerification][] = $keyVerification . " indiponivel";
-                session()->set("errors", $message);
+                self::$errors[$keyVerification][] = $keyVerification . " indiponivel";
             }
         }
     }

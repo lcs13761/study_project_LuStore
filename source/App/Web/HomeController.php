@@ -5,9 +5,8 @@ namespace Source\App\Web;
 
 use Source\Core\Pager;
 use Source\Model\About;
-use Source\Model\Product;
+use Source\Models\Product;
 use Source\Core\Controller;
-
 
 
 class HomeController extends Controller
@@ -19,7 +18,6 @@ class HomeController extends Controller
     public function index()
     {
 
-
         $head = $this->seo->render(
             "Site Modelo  .Conheca a " . CONF_SITE_NAME,
             CONF_SITE_DESC,
@@ -27,12 +25,7 @@ class HomeController extends Controller
             ""
         );
 
-        echo $this->view->render("web/home", [
-            // "product" => $product,
-            "head" => $head,
-            // "paginator" => $pager->render(),
-            // "banner" => $banner
-        ]);
+        return $this->view->render("web/home", ["head" => $head]);
     }
 
     public function show() {}

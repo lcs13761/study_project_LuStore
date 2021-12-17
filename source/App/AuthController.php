@@ -67,12 +67,12 @@ class AuthController extends Controller
         if ($auth == 'google') {
             $auth = new GoogleAuth();
             if (empty($auth->code))redirect($auth->authorization());
-            if (!empty($auth->error)) echo 'aa';
 
             $auth = $auth->user();
             $verify_email = $user->where('email',$auth->getEmail())->andWhere('auth_id',$auth->getId(),'!=')->count();
-            if (!$user->find($auth->getId()) && !$verify_email > 0) {
-                $user->create([
+            $userAuth = $user->where("auth_id",$auth->getId())->fetch();
+            if (!$userAuth && !$verify_email > 0) {
+                $user::create([
                     'auth_id' => $auth->getId(),
                     "name" => $auth->getName(),
                     "email" =>  $auth->getEmail(),
@@ -82,7 +82,7 @@ class AuthController extends Controller
                 ]);
             }
             if($verify_email > 0) redirect('/login');
-            (new Session())->set("authUser",  $auth->getId());
+            (new Session())->set("authUser",  $userAuth->id);
             redirect('/');
         }
     }

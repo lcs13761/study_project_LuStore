@@ -1,8 +1,7 @@
 <?php
 
-namespace Source\Core;
+namespace Source\Core\Database;
 
-use JetBrains\PhpStorm\Pure;
 
 abstract class Model
 {
@@ -39,6 +38,8 @@ abstract class Model
 
         $this->data->$name = $value;
     }
+
+
 
     /**
      * @param $name
@@ -77,15 +78,20 @@ abstract class Model
         return $this->fetch();
     }
 
-    public  function all(){
+    protected function all(){
         $this->query = "SELECT * FROM " . $this->table;
-        return (array)$this->fetch();
+        return $this->fetch(true);
     }
 
+    public static function __callStatic($method,$args){
+       $called = get_called_class();
+       $class = new $called();
+       return $class->$method(...$args);
+    }
 
-    public function find(int|string $id): mixed
+    protected function find(int|string $id): mixed
     {
-        $this->query = "SELECT * FROM {$this->table} WHERE id = :id or auth_id = :id";
+        $this->query = "SELECT * FROM {$this->table} WHERE id = :id";
         parse_str("id={$id}", $this->params);
         return  $this->fetch();
     }
@@ -161,15 +167,14 @@ abstract class Model
             }
             return $stmt->fetchObject(static::class);
         } catch (\PDOException $exception) {
-            return null;
+            return $exception;
         }
     }
 
-    final public function create(array|object $values)
+    final protected  function create(array|object $values): bool|string|null
     {
         try {
 
-            if(is_object($values)) $values = (array)$values;
             $save = [];
             foreach ($values as $key => $value) {
                 in_array($key, $this->fillable) ? $save[$key] = $value : "";
@@ -183,14 +188,14 @@ abstract class Model
             $this->data = $this->find($id);
             return $id;
         } catch (\PDOException $exception) {
-            return null;
+            return $exception;
         }
     }
 
     final public function update(?array $data = null): ?int
     {
         try {
-            $dataSet =  $this->search($data);
+            $dataSet =  $this->filter($data);
             $dataSet = implode(", ", $dataSet);
             $stmt = Connect::getInstance()->prepare("UPDATE {$this->table} SET {$dataSet} WHERE id = :id");
             $stmt->bindValue(":id" , $this->id);
@@ -203,26 +208,38 @@ abstract class Model
     }
 
     /**
-     * @param string|null $params
      * @param string|null $terms
-     * @param string|null $columns
-     * @return void|null
+     * @param string|null $params
+     * @return bool
      */
-    final public function delete(?string $params, ?string $terms, ?string $columns = null)
+    final public function delete(?string $terms, ?string $params):bool
     {
         try {
-            $stmt = Connect::getInstance()->prepare("DELETE FROM {$this->table} WHERE {$params} '{$terms}'");
+            $stmt = Connect::getInstance()->prepare("DELETE FROM {$this->table} WHERE {$terms}");
+            if ($params) {
+                parse_str($params, $params);
+                $stmt->execute($params);
+                return true;
+            }
             $stmt->execute();
+            return true;
         } catch (\PDOException $exception) {
-            return null;
+            return false;
         }
+    }
+
+    public function destroy():bool {
+        if(empty($this->id)){
+                return false;
+        }
+        return $this->delete("id = :id","id={$this->id}");
     }
 
     /**
      * @param array $data
      * @return array
      */
-    public function search(array $data): array
+    public function filter(array $data): array
     {
         $dataSet = [];
         foreach ($data as $key => $value) {
@@ -233,18 +250,6 @@ abstract class Model
         return $dataSet;
     }
 
-    // /**
-    //  * @param array $data
-    //  * @return array|null
-    //  */
-    // private function filter(array $data): ?array
-    // {
-    //     $filter = [];
-    //     foreach ($data as $key => $value) {
-    //         $filter[$key] = (is_null($value) ? null : filter_var($value, FILTER_DEFAULT));
-    //     }
-    //     return $filter;
-    // }
 
     final public function safe(): array {
         $safe = (array)$this->data;
@@ -257,7 +262,7 @@ abstract class Model
     /**
      * @return bool
      */
-    #[Pure]private function required(): bool
+    private function required(): bool
     {
         $data = (array)$this->data();
         foreach ($this->fillable as $field) {
