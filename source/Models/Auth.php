@@ -2,42 +2,47 @@
 
 namespace Source\Models;
 
-use Source\Core\Database\Model;
 use Source\Core\Session;
+use Source\Request\AuthRequest;
 
-class Auth extends Model
+class Auth
 {
 
-    protected $table = "users";
-
+    public static function auth(): User|null
+    {
+        $session = new Session();
+        if (!$session->has("authUser")) {
+            return null;
+        }
+        return User::find($session->authUser);
+    }
 
     /**
      * log-out
      */
-    public static function logout()
+    public static function logout(): void
     {
         $session = new Session();
         $session->unset("authUser");
     }
 
     /**
-     * @param string $usuario
-     * @param string $password
-     * @param int $level
-     * @return User|null
+     * @param array $credentials
+     * @param bool $save
+     * @return bool
      */
-    public function attempt(array $credentials, bool $save = false)
+    public static function attempt(array $credentials, bool $save = false): bool
     {
         $credentials = (object)$credentials;
-        $user = $this->auth($credentials->email);
+        $user = (new User)->auth($credentials->email);
         if (!$user) {
             session()->set("message","O usuario informado não está cadastrado");
-            return null;
+            return false;
         }
 
         if (!password_verify($credentials->password, $user->password)) {
             session()->set("message","A senha informada não confere");
-            return null;
+            return false;
         }
 
         if ($save) {

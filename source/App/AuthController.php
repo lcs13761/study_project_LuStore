@@ -11,6 +11,7 @@ use Source\Core\Controller;
 use Source\Core\Session;
 use Source\Models\Auth;
 use Source\Models\User;
+use Source\Request\AuthRequest;
 use Source\Support\Oauth2\GoogleAuth;
 use Source\Support\Validate;
 use Webmozart\Assert\Assert;
@@ -18,11 +19,9 @@ use Webmozart\Assert\Assert;
 class AuthController extends Controller
 {
 
-    public function index()
+    public function index():void
     {
-        if (auth()) {
-            redirect("/");
-        }
+        if (Auth::auth()) redirect("/");
 
         $head = $this->seo->render(
             CONF_SITE_NAME . " | singIn",
@@ -38,21 +37,17 @@ class AuthController extends Controller
         ]);
     }
 
-    public function login()
+   final public function login(): void
     {
-        if (auth()) {
-            redirect("/");
-        }
+        if (Auth::auth()) redirect("/");
 
+        $request = new AuthRequest();
 
-        $auth = (new Auth())->attempt([
-            'name' => input()->value('name'),
-            'email' => input()->value('email'),
-            'password' => input()->value('password')
+        $auth = Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password
         ]);
-        if (!$auth) {
-            redirect("/login");
-        }
+        if (!$auth) redirect("/login");
         redirect("/");
     }
 
@@ -60,14 +55,13 @@ class AuthController extends Controller
      * @param $auth
      * @var  GoogleUser $auth
      */
-    public function loginAuth($auth)
+    public function loginAuth($auth):void
     {
         $user = (new User());
 
         if ($auth == 'google') {
             $auth = new GoogleAuth();
             if (empty($auth->code))redirect($auth->authorization());
-
             $auth = $auth->user();
             $verify_email = $user->where('email',$auth->getEmail())->andWhere('auth_id',$auth->getId(),'!=')->count();
             $userAuth = $user->where("auth_id",$auth->getId())->fetch();
@@ -87,7 +81,7 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout():void
     {
         Auth::logout();
         redirect("/login");

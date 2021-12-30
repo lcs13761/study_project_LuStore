@@ -10,7 +10,7 @@ use Source\Request\CategoryRequest;
 class CategoryController extends Controller implements IResourceController
 {
 
-    public function index()
+    public function index(): string
     {
         $categories = Category::all();
         return $this->view->render('admin/category/index', compact('categories'));
@@ -22,7 +22,7 @@ class CategoryController extends Controller implements IResourceController
     }
 
 
-    public function create()
+    public function create(): string
     {
         return $this->view->render('admin/category/form');
     }
@@ -35,7 +35,7 @@ class CategoryController extends Controller implements IResourceController
         redirect(url('admin/category'));
     }
 
-    public function edit($id)
+    public function edit($id): string
     {
         $category = Category::find($id);
         return $this->view->render('admin/category/form',compact('category'));
@@ -54,7 +54,6 @@ class CategoryController extends Controller implements IResourceController
     /**
      * @param $id
      * @var Category $category;
-     * @return mixed|void
      */
     public function destroy($id)
     {

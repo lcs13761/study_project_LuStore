@@ -7,7 +7,10 @@ use Source\Core\Pager;
 use Source\Model\About;
 use Source\Models\Product;
 use Source\Core\Controller;
+use Source\Models\User;
+use Tests\Support\Migration\src\TypeColumn;
 
+use Migrations;
 
 class HomeController extends Controller
 {
@@ -17,6 +20,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $head = $this->seo->render(
             "Site Modelo  .Conheca a " . CONF_SITE_NAME,
             CONF_SITE_DESC,

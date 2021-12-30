@@ -2,6 +2,7 @@
 
 namespace Source\App\Admin;
 
+use Exception;
 use Source\Core\Controller;
 use Pecee\Controllers\IResourceController;
 use Source\Models\Category;
@@ -12,15 +13,14 @@ class ProductController extends Controller implements IResourceController
 {
 
 
-    public function index()
+    public function index(): string
     {
 
         $products = Product::all();
         return $this->view->render("admin/product/index", compact('products'));
     }
 
-
-    public function create()
+    public function create(): string
     {
         $categories = Category::all();
         return $this->view->render("admin/product/form", compact('categories'));
@@ -28,7 +28,6 @@ class ProductController extends Controller implements IResourceController
 
     public function store()
     {
-
         $request = new ProductRequest();
         if(!$request->validation()) redirect(url_back());
         if(isset($request->image)){
@@ -43,7 +42,7 @@ class ProductController extends Controller implements IResourceController
     {
     }
 
-    public function edit($id)
+    public function edit($id): string
     {
         $product = Product::find($id);
         $categories = Category::all();
@@ -51,10 +50,14 @@ class ProductController extends Controller implements IResourceController
     }
 
 
-    public function update($id)
+    /**
+     * @throws Exception
+     */
+    public function update( $id): void
     {
         $request = new ProductRequest();
         if(!$request->validation()) redirect(url_back());
+
         $product = Product::find($id);
         if(isset($request->image)){
             $this->file->destroy($product->image);

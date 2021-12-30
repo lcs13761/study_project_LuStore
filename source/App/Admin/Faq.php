@@ -2,16 +2,70 @@
 
 namespace Source\App\Admin;
 
+use Pecee\Controllers\IResourceController;
 use Source\Model\About;
 use Source\Core\Controller;
 
-class Faq extends Controller
+class Faq extends Controller implements IResourceController
 {
-  public function index(){}
-  public function create(){}  
-  public function store(){}
-  public function show(){}
-  public function edit(){}
-  public function update(){}
-  public function destroy(){}
+
+    /**
+     * @return mixed
+     */
+    public function index()
+    {
+        // TODO: Implement index() method.
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function show($id)
+    {
+        // TODO: Implement show() method.
+    }
+
+    /**
+     * @return mixed
+     */
+    public function create()
+    {
+        // TODO: Implement create() method.
+    }
+
+    /**
+     * @return mixed
+     */
+    public function store()
+    {
+        // TODO: Implement store() method.
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function edit($id)
+    {
+        // TODO: Implement edit() method.
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function update($id)
+    {
+        // TODO: Implement update() method.
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function destroy($id)
+    {
+        // TODO: Implement destroy() method.
+    }
 }

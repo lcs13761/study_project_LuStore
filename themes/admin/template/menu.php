@@ -1,3 +1,8 @@
+<?php
+
+use Source\Models\Auth;
+
+?>
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -6,8 +11,8 @@
         <a class="sidebar-brand  dropdown-toggle d-flex align-items-center justify-content-center" href="#"
            id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img class="img-profile  icon-circle "
-                 src="<?= auth()->photo ?? theme('assets/img/undraw_profile.svg', CONF_VIEW_ADMIN)  ?>">
-            <div class="sidebar-brand-text mx-3"><?= auth()->name ?></div>
+                 src="<?= Auth::auth()->photo ?? theme('assets/img/undraw_profile.svg', CONF_VIEW_ADMIN)  ?>">
+            <div class="sidebar-brand-text mx-3"><?= Auth::auth()->name ?></div>
         </a>
         <div class="dropdown-menu dropdown-menu-right shadow " aria-labelledby="userDropdown">
             <a class="dropdown-item" href="#">

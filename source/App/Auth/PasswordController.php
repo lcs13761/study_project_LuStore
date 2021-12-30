@@ -16,6 +16,4 @@ class PasswordController extends Controller
         );
         return $this->view->render('web/forgot-password',compact('head'));
     }
-
-
 }

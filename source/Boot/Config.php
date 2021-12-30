@@ -51,7 +51,6 @@ define("CONF_VIEW_EXT", "php");
 define("CONF_VIEW_THEME", "web");
 define("CONF_VIEW_ADMIN", "admin");
 
-
 /**
  * SITE
  */
@@ -61,11 +60,11 @@ define("CONF_SITE_DESC" , "Conheça nosso catalogo de roupas ,é bolsas");
 define("CONF_SITE_LANG", "pt_BR");
 define("CONF_SITE_DOMAIN", "luStore.com.br");
 define("CONF_SITE_ADDR_STREET", "SC 406 - ");
-define("CONF_SITE_ADDR_NUMBER", "3588");
+define("CONF_SITE_ADDR_NUMBER", "2810");
 define("CONF_SITE_ADDR_COMPLEMENT", "");
-define("CONF_SITE_ADDR_CITY", "Altamira");
+define("CONF_SITE_ADDR_CITY", "AA");
 define("CONF_SITE_ADDR_STATE", "PA");
-define("CONF_SITE_ADDR_ZIPCODE", "68374-732");
+define("CONF_SITE_ADDR_ZIPCODE", "68300-235");
 
 
 /**
