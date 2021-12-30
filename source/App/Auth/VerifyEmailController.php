@@ -30,7 +30,7 @@ class VerifyEmailController extends Controller
 
       public function verifiy($id, $token)
       {
-            $user = (new User())->find($id);
+            $user = User::find($id);
             if (!$user || $user->email_verified !== $token) {
                   session()->set("message", "Error ao verficar o e-mail, faça login para pode solicitar outra verificacão.");
                   redirect("/login");

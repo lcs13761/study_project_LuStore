@@ -7,7 +7,7 @@ abstract class Model
 {
     protected array $protected = [];
 
-    protected string $table = '';
+    protected string $table = 'users';
 
     protected $data;
 
@@ -39,7 +39,11 @@ abstract class Model
         $this->data->$name = $value;
     }
 
-
+    public static function __callStatic($method,$args){
+        $called = get_called_class();
+        $class = new $called();
+        return $class->$method(...$args);
+    }
 
     /**
      * @param $name
@@ -81,12 +85,6 @@ abstract class Model
     protected function all(){
         $this->query = "SELECT * FROM " . $this->table;
         return $this->fetch(true);
-    }
-
-    public static function __callStatic($method,$args){
-       $called = get_called_class();
-       $class = new $called();
-       return $class->$method(...$args);
     }
 
     protected function find(int|string $id): mixed
@@ -133,8 +131,6 @@ abstract class Model
         } catch (\PDOException $exception) {
             redirect("/ops/problemas");
         }
-
-
         return $this;
     }
 
@@ -167,11 +163,11 @@ abstract class Model
             }
             return $stmt->fetchObject(static::class);
         } catch (\PDOException $exception) {
-            return $exception;
+            return null;
         }
     }
 
-    final protected  function create(array|object $values): bool|string|null
+    final protected function create(array|object $values): Model|null
     {
         try {
 
@@ -186,9 +182,9 @@ abstract class Model
             $stmt->execute($save);
             $id = Connect::getInstance()->lastInsertId();
             $this->data = $this->find($id);
-            return $id;
+            return $this;
         } catch (\PDOException $exception) {
-            return $exception;
+            return null;
         }
     }
 

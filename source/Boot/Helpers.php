@@ -171,18 +171,6 @@ if (!function_exists('session')) {
 }
 
 
-if (!function_exists('auth')) {
-
-    function auth()
-    {
-        $session = new Session();
-        if (!$session->has("authUser")) {
-            return null;
-        }
-        
-        return User::find($session->authUser);
-    }
-}
 
 function is_email(string $email): bool
 {

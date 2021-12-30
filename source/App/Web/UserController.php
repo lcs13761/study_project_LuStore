@@ -30,7 +30,7 @@ class UserController extends Controller
      * @var UserRequest $request
      */
 
-    public function store()
+    public function store(): void
     {
         $request = new UserRequest();
         if (!$request->validation()) redirect(abort("error"));
@@ -41,7 +41,7 @@ class UserController extends Controller
             "email_verified" => tokenEmailVerification($request->email)
         ];
 
-        $user = (new User())->create($create);
+        $user = User::create($create);
         (new Event())->registered($user);
         redirect('/confirmar');
     }

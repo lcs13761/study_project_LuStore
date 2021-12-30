@@ -4,7 +4,7 @@ use Pecee\SimpleRouter\SimpleRouter;
 
 SimpleRouter::group(['prefix' => '/admin','middleware' => Source\Support\MiddlewareAuth::class,'namespace' => 'admin'], function () {
 
-      SimpleRouter::get('/','DashboardController@index');
+      SimpleRouter::get('/','DashBoardController@index');
 
       SimpleRouter::group(['prefix' => '/product'],function(){
           SimpleRouter::get('/','ProductController@index')->name('product.index');
