@@ -15,9 +15,9 @@
                     <div class='col-sm-6 col-lg-4 col-xl-3 my-1 remove<?= $i; ?>'>
                         <div class=' card-deck'>
                             <div class="card mb-2">
-                                <img style='height:200px;' class="card-img-top img-fluid" src="<?= $product->image ?>" alt="Card image cap">
+                                <img style='height:200px;' class="card-img-top img-fluid" src="<?= $product->image ??  "https://via.placeholder.com/200x200" ?>" alt="Card image cap">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?= $product->product ?></h5>
+                                    <h5 class="card-title"><?= $product->name ?></h5>
                                     <p class="card-text"><?= $product->description ?></p>
                                     <p class="card-text">R$ <?= money($product->value) ?></p>
                                     <div class="text-center">

@@ -16,7 +16,7 @@ define("CONF_URL_TEST" , "http://localhost");
 define("CONF_GOOGLE",[
   'clientId'     => '',
   'clientSecret' => '',
-  'redirectUri'  => 'http://localhost/login/google',
+  'redirectUri'  => '',
 ]);
 
 

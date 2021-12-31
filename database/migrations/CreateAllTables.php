@@ -11,7 +11,7 @@ class CreateAllTables
         Schema::create("users", function (MethodType $table) {
             return array(
                 $table->id()->unique()->autIncrement()->createRow(),
-                $table->bigInt("auth_id")->createRow(),
+                $table->string("auth_id")->createRow(),
                 $table->string('photo')->createRow(),
                 $table->string('name')->notNull()->createRow(),
                 $table->string('email')->unique()->notNull()->createRow(),

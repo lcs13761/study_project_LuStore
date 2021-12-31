@@ -24,6 +24,16 @@ SimpleRouter::group(['prefix' => '/admin','middleware' => Source\Support\Middlew
           SimpleRouter::put('/update/{id}','CategoryController@update')->name('category.update')->where(['id' => '[0-9]+']);
           SimpleRouter::delete('/destroy/{id}','CategoryController@destroy')->name('category.destroy')->where(['id' => '[0-9]+']);
       });
+
+      SimpleRouter::group(['prefix' => '/user'],function(){
+        SimpleRouter::get('/','AdminController@index')->name('user.index');
+        SimpleRouter::get('/{id}','AdminController@show')->name('user.show')->where(['id' => '[0-9]+']);
+        SimpleRouter::get('/create','AdminController@create')->name('user.create');
+        SimpleRouter::post('/store','AdminController@store')->name('user.store');
+        SimpleRouter::get('/edit/{id}','AdminController@edit')->name('user.edit')->where(['id' => '[0-9]+']);
+        SimpleRouter::put('/update/{id}','AdminController@update')->name('user.update')->where(['id' => '[0-9]+']);
+        SimpleRouter::delete('/destroy/{id}','AdminController@destroy')->name('user.destroy')->where(['id' => '[0-9]+']);
+    });
 });
 
 // /**perguntas&respostas */

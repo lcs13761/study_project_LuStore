@@ -57,28 +57,21 @@ class AuthController extends Controller
      */
     public function loginAuth($auth):void
     {
-        $user = (new User());
 
         if ($auth == 'google') {
             $auth = new GoogleAuth();
             if (empty($auth->code))redirect($auth->authorization());
             $auth = $auth->user();
-            $verify_email = $user->where('email',$auth->getEmail())->andWhere('auth_id',$auth->getId(),'!=')->count();
-            $userAuth = $user->where("auth_id",$auth->getId())->fetch();
-            if (!$userAuth && !$verify_email > 0) {
-                $user::create([
-                    'auth_id' => $auth->getId(),
-                    "name" => $auth->getName(),
-                    "email" =>  $auth->getEmail(),
-                    'password' => passwd($auth->getId()),
-                    'photo' => $auth->getAvatar(),
-                    "email_verification_at" => $user->timeNow()
-                ]);
-            }
-            if($verify_email > 0) redirect('/login');
-            (new Session())->set("authUser",  $userAuth->id);
-            redirect('/');
+            $routeRedirect = (new User())->oAuthGoogle($auth);
+            redirect($routeRedirect);
+            return;
         }
+
+        if($auth == "facebook"){
+        return;
+        }
+
+        redirect('login');
     }
 
     public function logout():void

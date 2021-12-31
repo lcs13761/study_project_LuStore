@@ -44,33 +44,17 @@ $errors = errors();
                                         <div class="form-group  form-float input-group">
                                             <label class="col-form-label">Produto<i>*</i></label>
                                             <div class="form-line">
-                                                <input name="product" type="text" class="form-control  border-0"
-                                                       value="<?= $product->product ?? '' ?>"/>
+                                                <input name="name" type="text" class="form-control  border-0"
+                                                       value="<?= $product->name ?? '' ?>"/>
                                             </div>
-                                            <?php if (isset($errors->product)): ?>
+                                            <?php if (isset($errors->name)): ?>
                                                 <div class="col-sm-12 p-0">
                                                      <span class="invalid-feedback d-block col-blue">
-                                                         <strong><?= $errors->product[0]; ?></strong>
+                                                         <strong><?= $errors->name[0]; ?></strong>
                                                     </span>
                                                 </div>
                                             <?php endif; ?>
                                             <div class="help-info">Min. 3, Max. 100 Caracteres</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group form-float input-group">
-                                            <label class="col-form-label">Descrição<i>(Opicional)</i></label>
-                                            <div class="form-line">
-                                                <input name="description" type="text" class="form-control  border-0"
-                                                       value="<?= $product->description ?? '' ?>">
-                                            </div>
-                                            <?php if (isset($errors->description)): ?>
-                                                <div class="col-sm-12 p-0">
-                                                     <span class="invalid-feedback d-block col-blue">
-                                                         <strong><?= $errors->description[0]; ?></strong>
-                                                    </span>
-                                                </div>
-                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +121,7 @@ $errors = errors();
                                                 <option value="">Nada selecionado</option>
                                                 <?php foreach ($categories as $category): ?>
                                                     <option <?= isset($product) && $category->id == $product->category_id ? 'selected' : ''; ?>
-                                                            value="<?= $category->id ?>"><?= $category->category ?></option>
+                                                            value="<?= $category->id ?>"><?= $category->name ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                             <?php if (isset($errors->category_id)): ?>
@@ -167,10 +151,8 @@ $errors = errors();
 <?php $v->start("scripts"); ?>
 
 
-<scrit src="<?= theme('assets/jquery-maskMoney/dist/jquery.maskMoney.js',CONF_VIEW_ADMIN) ?>"></scrit>
 <script>
 
-    $('#currency').maskMoney('mask');
 
    $('#imageUpload').change(function (e){
        var image =  $('#imageUpload');

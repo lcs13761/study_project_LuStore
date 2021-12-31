@@ -3,6 +3,8 @@
 namespace Source\Core\Database;
 
 
+use PDOException;
+
 abstract class Model
 {
     protected array $protected = [];
@@ -167,13 +169,13 @@ abstract class Model
         }
     }
 
-    final protected function create(array|object $values): Model|null
+    final protected function create(array|object $values): Model
     {
         try {
 
             $save = [];
             foreach ($values as $key => $value) {
-                in_array($key, $this->fillable) ? $save[$key] = $value : "";
+                in_array($key, $this->fillable) && !empty($value) ? $save[$key] = $value : "";
             }
 
             $columns = implode(", ", array_keys($save));
@@ -184,22 +186,34 @@ abstract class Model
             $this->data = $this->find($id);
             return $this;
         } catch (\PDOException $exception) {
-            return null;
+            throw  new \PDOException($exception->getMessage());
+
         }
     }
 
-    final public function update(?array $data = null): ?int
+    /**
+     * @param array|null $data
+     * @return int|PDOException
+     */
+    final public function update(?array $data = null): int|\PDOException
     {
         try {
+            $save = [];
+            foreach ($data as $key => $value) {
+                in_array($key, $this->fillable) && !empty($value) ? $save[$key] = $value : "";
+            }
+
             $dataSet =  $this->filter($data);
             $dataSet = implode(", ", $dataSet);
+            $data = $save;
             $stmt = Connect::getInstance()->prepare("UPDATE {$this->table} SET {$dataSet} WHERE id = :id");
+            var_dump($stmt);
             $stmt->bindValue(":id" , $this->id);
             parse_str("id={$this->id}",$this->params);
             $stmt->execute(array_merge($data,$this->params));
             return ($stmt->rowCount() ?? 1);
         } catch (\PDOException $exception) {
-            return null;
+            return throw new \PDOException($exception->getMessage());
         }
     }
 
@@ -231,6 +245,7 @@ abstract class Model
         return $this->delete("id = :id","id={$this->id}");
     }
 
+
     /**
      * @param array $data
      * @return array
@@ -239,7 +254,7 @@ abstract class Model
     {
         $dataSet = [];
         foreach ($data as $key => $value) {
-            if (!in_array($key, $this->protected) && in_array($key,$this->fillable)) {
+            if (!in_array($key, $this->protected) && in_array($key,$this->fillable) && !empty($value)) {
                 $dataSet[] = "{$key} = :{$key}";
             }
         }

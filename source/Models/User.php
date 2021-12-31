@@ -4,6 +4,7 @@
 namespace Source\Models;
 
 use Source\Core\Database\Model;
+use Source\Core\Session;
 
 class User extends Model 
 {
@@ -16,6 +17,25 @@ class User extends Model
     {
 
         return $this->update(["email_verified" => null,"email_verification_at" => $this->timeNow()]);
+    }
+
+    public function oAuthGoogle($auth){
+        $verify_email = $this->where('email',$auth->getEmail())->andWhere('auth_id',$auth->getId(),'!=')->count();
+        $userAuth = $this->where("auth_id",$auth->getId())->fetch();
+        if (!$userAuth && $verify_email == 0) {
+
+            $userAuth = $this->create([
+                'auth_id' => $auth->getId(),
+                "name" => $auth->getName(),
+                "email" =>  $auth->getEmail(),
+                'password' => passwd($auth->getId()),
+                'photo' => $auth->getAvatar(),
+                "email_verification_at" => $this->timeNow()
+            ]);
+        }
+        if($verify_email > 0) return "login";
+        session()->set("authUser",  $userAuth->id);
+        return "/";
     }
 
     public function timeNow(): string

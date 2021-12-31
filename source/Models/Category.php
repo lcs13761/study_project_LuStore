@@ -6,7 +6,7 @@ use Source\Core\Database\Model;
 
 class Category extends Model
 {
-    protected array $fillable = ['category'];
+    protected array $fillable = ['name'];
     protected string $table = 'categories';
     protected array $protected = ['id'];
 

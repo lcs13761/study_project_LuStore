@@ -14,33 +14,48 @@ abstract class FormRequest
     /**
      * @throws Exception
      */
-    public function __construct(){
+    public function __construct()
+    {
         $this->method = strtoupper(request()->getLoadedRoute()->getRequestMethods()[0]);
         $this->data = (object)input()->all();
-        if(isset( request()->getLoadedRoute()->getParameters()['id'])){
+        if (isset(request()->getLoadedRoute()->getParameters()['id'])) {
             $this->data->id = request()->getLoadedRoute()->getParameters()['id'];
         }
-        if(isset($_FILES['image'])){
-            $this->data->image = $_FILES['image'];
+        if (!empty($_FILES)) {
+            $files = array_keys($_FILES);
+            foreach ($files as $key) {
+                $filePost = $_FILES[$key];
+                $this->file_exists($filePost,$key);
+            }
         }
 
         $this->csrf_verification();
     }
 
-    public function all(){
+    private function file_exists(array $file,string $key)
+    {
+        if (!empty($file['size'])) {
+            $this->data->$key = $file;
+        } else {
+            $this->data->$key = null;
+        }
+    }
+
+    public function all()
+    {
         return (array)$this->data;
     }
 
-   final public function validation(): bool
-   {
-       if(method_exists($this,'attributes')){
-           $this->attributes();
-       }
-       if(method_exists($this, 'rules')){
-           $validation = Validate::make((array)$this->data, $this->rules());
-       }
-       if(!$validation) return $validation;
-       return true;
+    final public function validation(): bool
+    {
+        if (method_exists($this, 'attributes')) {
+            $this->attributes();
+        }
+        if (method_exists($this, 'rules')) {
+            $validation = Validate::make((array)$this->data, $this->rules());
+        }
+        if (!$validation) return $validation;
+        return true;
     }
 
     public function __set($name, $value)
@@ -57,15 +72,17 @@ abstract class FormRequest
         return isset($this->data->$name);
     }
 
-    final public function __get($name):mixed{
+    final public function __get($name): mixed
+    {
         return ($this->data->$name ?? null);
     }
 
     /**
      * @throws Exception
      */
-   private function csrf_verification():void{
-        if(!$this->_token) throw new Exception('csrf is required');
+    private function csrf_verification(): void
+    {
+        if (!$this->_token) throw new Exception('csrf is required');
         if (!csrf_verify($this->_token)) throw new Exception('csrf error');
     }
 

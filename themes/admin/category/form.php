@@ -25,15 +25,15 @@ $errors = errors();
                                     <div class="form-group form-float">
                                         <label class="form-label">Categoria<i>*</i></label>
                                         <div class="form-line">
-                                            <input name="category" type="text" class="form-control border-0"
-                                                   value="<?= $category->category ?? "" ?>"
+                                            <input name="name" type="text" class="form-control border-0"
+                                                   value="<?= $category->name ?? "" ?>"
                                                    required/>
 
                                         </div>
-                                        <?php if (isset($errors->category)): ?>
+                                        <?php if (isset($errors->name)): ?>
                                             <div class="col-sm-12 p-0">
                                                      <span class="invalid-feedback d-block col-blue">
-                                                         <strong><?= $errors->category[0]; ?></strong>
+                                                         <strong><?= $errors->name[0]; ?></strong>
                                                     </span>
                                             </div>
                                         <?php endif; ?>
