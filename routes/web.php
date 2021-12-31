@@ -24,26 +24,26 @@ SimpleRouter::group(['prefix' => '/'], function () {
 
 
 
-    SimpleRouter::group(["prefix" => "user"], function () {
-      SimpleRouter::get("/create", "UserController@create")->name('user.create');
-      SimpleRouter::post("/store", "UserController@store")->name('user.store');
+    SimpleRouter::group(["prefix" => "auth"], function () {
+      SimpleRouter::get("/create", "UserController@create")->name('auth.create');
+      SimpleRouter::post("/store", "UserController@store")->name('auth.store');
     });
   });
 });
 
-SimpleRouter::error(function(Request $request,\Exception $exception){
-    switch($exception->getCode()) {
-        // Page not found
-        case 404:
-            response()->redirect('/ops/not-found');
-            break;
-            break;
-        case 503:
-            response()->redirect('/ops/service-unavailable');
-            break;
-        default:
-            response()->redirect('/ops/' , $exception->getCode());
-            break;
-    }
-});
+//SimpleRouter::error(function(Request $request,\Exception $exception){
+//    switch($exception->getCode()) {
+//        // Page not found
+//        case 404:
+//            response()->redirect('/ops/not-found');
+//            break;
+//            break;
+//        case 503:
+//            response()->redirect('/ops/service-unavailable');
+//            break;
+//        default:
+//            response()->redirect('/ops/' , $exception->getCode());
+//            break;
+//    }
+//});
 

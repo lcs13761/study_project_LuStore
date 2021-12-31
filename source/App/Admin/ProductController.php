@@ -3,11 +3,11 @@
 namespace Source\App\Admin;
 
 use Exception;
-use Source\Core\Controller;
 use Pecee\Controllers\IResourceController;
+use Source\Core\Controller;
 use Source\Models\Category;
 use Source\Models\Product;
-use Source\Request\ProductRequest;
+use Source\Request\Admin\ProductRequest;
 
 class ProductController extends Controller implements IResourceController
 {
@@ -30,6 +30,7 @@ class ProductController extends Controller implements IResourceController
     {
         $request = new ProductRequest();
         if(!$request->validation()) redirect(url_back());
+
         if(isset($request->image)){
             $verify = $this->file->save($request->image);
             $request->image = $verify;
@@ -59,10 +60,12 @@ class ProductController extends Controller implements IResourceController
         if(!$request->validation()) redirect(url_back());
 
         $product = Product::find($id);
-        if(isset($request->image)){
+        if(!empty($request->image)){
             $this->file->destroy($product->image);
             $verify = $this->file->save($request->image);
             $request->image = $verify;
+        }else{
+            $request->image = null;
         }
         $product->update($request->all());
         redirect(url('product.index'));

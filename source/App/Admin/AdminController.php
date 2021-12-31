@@ -3,6 +3,11 @@
 namespace Source\App\Admin;
 use Pecee\Controllers\IResourceController;
 use Source\Core\Controller;
+use Source\Models\Auth;
+use Source\Models\User;
+use Source\Request\Admin\UserRequest;
+use Source\Support\Event;
+use Source\Support\File;
 
 class AdminController extends Controller implements IResourceController
 {
@@ -13,7 +18,8 @@ class AdminController extends Controller implements IResourceController
      */
     public function index()
     {
-        // TODO: Implement index() method.
+       $users = (new User())->where('level','5' , ">=")->fetch(true);
+       return $this->view->render('admin/user/index',compact('users'));
     }
 
     /**
@@ -30,7 +36,7 @@ class AdminController extends Controller implements IResourceController
      */
     public function create()
     {
-        // TODO: Implement create() method.
+       return $this->view->render('admin/user/form');
     }
 
     /**
@@ -38,7 +44,23 @@ class AdminController extends Controller implements IResourceController
      */
     public function store()
     {
-        // TODO: Implement store() method.
+        $request = new UserRequest();
+        if (!$request->validation()) redirect(url_back());
+        if($request->photo) {
+            $verify = $this->file->save($request->photo);
+            $request->photo = $verify;
+        }
+        $create = [
+            "photo" => $request->photo,
+            "name" => $request->name,
+            "email" => $request->email,
+            "password" => passwd($request->password),
+            "level" => "5",
+            "email_verified" => tokenEmailVerification($request->email)
+        ];
+        $user = User::create($create);
+        (new Event())->registered($user);
+        redirect(url('user.index'));
     }
 
     /**
@@ -47,7 +69,8 @@ class AdminController extends Controller implements IResourceController
      */
     public function edit($id)
     {
-        // TODO: Implement edit() method.
+        $user = (new User())->where('id',$id)->andWhere('level' , '5',">=")->fetch();
+        return $this->view->render('admin/user/form',compact('user'));
     }
 
     /**
@@ -56,7 +79,16 @@ class AdminController extends Controller implements IResourceController
      */
     public function update($id)
     {
-        // TODO: Implement update() method.
+        $request = new UserRequest();
+        if (!$request->validation()) redirect(url_back());
+        $user = User::find($id);
+        if($request->photo) {
+            $verify = $this->file->save($request->photo);
+            $request->photo = $verify;
+        }
+        var_dump($request->all());
+        $user->update($request->all());
+        redirect(url('user.index'));
     }
 
     /**
@@ -65,6 +97,19 @@ class AdminController extends Controller implements IResourceController
      */
     public function destroy($id)
     {
-        // TODO: Implement destroy() method.
+
+        try {
+            if(Auth::auth()->level != 6){
+                return response()->json(["status" => "error",'error' => 'Você não possui permisão necessaria para excluir outro administrador.'],500);
+            }
+            $user = User::find($id);
+            if($user->photo)(new File())->destroy($user->photo);
+            $user->destroy();
+            return response()->json(["status" => 'success']);
+        } catch (\Exception $e){
+            return response()->json(["status" => "error","error" => $e->getMessage()],500);
+        }
+
+
     }
 }

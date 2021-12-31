@@ -4,7 +4,6 @@
 namespace Source\Support;
 
 use Pecee\Http\Request;
-
 use Pecee\Http\Middleware\IMiddleware;
 use Source\Models\Auth;
 

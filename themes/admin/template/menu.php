@@ -58,7 +58,7 @@ use Source\Models\Auth;
     </li>
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="<?= url('user.index') ?>">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Administradores</span></a>
     </li>

@@ -5,7 +5,7 @@ namespace Source\App\Admin;
 use Pecee\Controllers\IResourceController;
 use Source\Core\Controller;
 use Source\Models\Category;
-use Source\Request\CategoryRequest;
+use Source\Request\Admin\CategoryRequest;
 
 class CategoryController extends Controller implements IResourceController
 {

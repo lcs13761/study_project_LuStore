@@ -4,7 +4,7 @@ namespace Source\App\Web;
 
 use Source\Core\Controller;
 use Source\Models\User;
-use Source\Request\UserRequest;
+use Source\Request\Admin\UserRequest;
 use Source\Support\Event;
 
 class UserController extends Controller

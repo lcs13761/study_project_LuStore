@@ -63,7 +63,7 @@
                         foreach($categories as $category):?>
                             <tr>
                                 <td><?= $i+1; ?></td>
-                                <td><?= $category->category ?></td>
+                                <td><?= $category->name ?></td>
                                 <td>  <div class="text-center btn-center">
                                         <a href="<?= url('category.edit',['id'=> $category->id]) ?>" class="btn btn-success waves-effect" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Editar">
                                             <i class="fas fa-pen px-2 py-1"></i>
