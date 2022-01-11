@@ -1,9 +1,16 @@
 <div class=" bg-dark border-top">
     <div class="container" style="max-width:1170px">
         <div class="row">
-            <div class="col-lg-3  px-2">
-                <div class="bg-warning h-100">
-                    <h3 class='h-100 d-flex align-items-center justify-content-center m-0 h5 fw-bolde'>CATEGORIAS</h3>
+            <div class="col-lg-3">
+                <div class='d-flex  bg-warning h-100 justify-content-center dropdown'>
+                    <h5 class='m-0 user-select-none fw-bolde sidebar-brand  dropdown-toggle d-flex align-items-center justify-content-center' href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">CATEGORIAS</h5>
+                    <div class="dropdown-menu dropdown-menu-right shadow " aria-labelledby="userDropdown">
+                        <?php foreach ($categories as $category): ?>
+                        <a class="dropdown-item px-5" href="<?= url('category.show.web', ['category' => str_replace(' ', '',$category->name),'id' => $category->id]) ?>">
+                            <?= $category->name ?>
+                        </a>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
                 <ul></ul>
             </div>
@@ -19,12 +26,6 @@
                                         <!-- <ul class="dropdown">
                                             <li><a href="cart.html">Cart</a></li>
                                             <li><a href="checkout.html">Checkout</a></li>
-                                        </ul> -->
-                                    </li>
-                                    <li class=""><a class="p-4 nav-link text-white fs-6" href="#">Páginas</a></li>
-                                    <li class=""><a class="p-4 nav-link text-white fs-6" href="#">Blog<i class="ti-angle-down"></i></a>
-                                        <!-- <ul class="dropdown">
-                                            <li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
                                         </ul> -->
                                     </li>
                                     <li class=""><a class="p-4 nav-link text-white fs-6" href="contact.html">Entre em contato conosco</a></li>

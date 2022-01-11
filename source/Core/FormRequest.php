@@ -18,9 +18,11 @@ abstract class FormRequest
     {
         $this->method = strtoupper(request()->getLoadedRoute()->getRequestMethods()[0]);
         $this->data = (object)input()->all();
+
         if (isset(request()->getLoadedRoute()->getParameters()['id'])) {
             $this->data->id = request()->getLoadedRoute()->getParameters()['id'];
         }
+
         if (!empty($_FILES)) {
             $files = array_keys($_FILES);
             foreach ($files as $key) {
@@ -30,6 +32,12 @@ abstract class FormRequest
         }
 
         $this->csrf_verification();
+    }
+
+    private function dataModified(){
+        if (method_exists($this, 'modifyData')) {
+           $this->modifyData();
+        }
     }
 
     private function file_exists(array $file,string $key)

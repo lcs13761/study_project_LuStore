@@ -15,7 +15,7 @@ class ProductController extends Controller implements IResourceController
 
     public function index(): string
     {
-
+    
         $products = Product::all();
         return $this->view->render("admin/product/index", compact('products'));
     }

@@ -19,14 +19,6 @@ use Source\Models\Auth;
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 Perfil
             </a>
-            <a class="dropdown-item" href="#">
-                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                Configurações
-            </a>
-            <a class="dropdown-item" href="#">
-                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                Atividades
-            </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="logout">
                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -46,7 +38,7 @@ use Source\Models\Auth;
     <hr class="sidebar-divider">
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link" href="<?= url('/admin/product') ?>">
+        <a class="nav-link" href="<?= url('product.index') ?>">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Produtos</span></a>
     </li>
@@ -64,9 +56,9 @@ use Source\Models\Auth;
     </li>
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="<?= url('home') ?>">
             <i class="fas fa-fw fa-table"></i>
-            <span>Feedbacks</span></a>
+            <span>Volta Para o Site</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

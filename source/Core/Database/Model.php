@@ -41,7 +41,8 @@ abstract class Model
         $this->data->$name = $value;
     }
 
-    public static function __callStatic($method,$args){
+    public static function __callStatic($method, $args)
+    {
         $called = get_called_class();
         $class = new $called();
         return $class->$method(...$args);
@@ -51,7 +52,7 @@ abstract class Model
      * @param $name
      * @return bool
      */
-   final public function __isset($name): bool
+    final public function __isset($name): bool
     {
         return isset($this->data->$name);
     }
@@ -60,12 +61,12 @@ abstract class Model
      * @param $name
      * @return null
      */
-   final public function __get($name): mixed
+    final public function __get($name): mixed
     {
         return ($this->data->$name ?? null);
     }
 
-   public function data(): ?object
+    public function data(): ?object
     {
         return $this->data;
     }
@@ -84,30 +85,33 @@ abstract class Model
         return $this->fetch();
     }
 
-    protected function all(){
+    private function all()
+    {
         $this->query = "SELECT * FROM " . $this->table;
         return $this->fetch(true);
     }
 
-    protected function find(int|string $id): mixed
+    private function find(int|string $id): mixed
     {
         $this->query = "SELECT * FROM {$this->table} WHERE id = :id";
         parse_str("id={$id}", $this->params);
         return  $this->fetch();
     }
 
-    final public function where(string $column, string $value,string $expression = "="): Model
+    private function where(string $column, string $value, string $expression = "="): Model
     {
         $this->query = "SELECT * FROM {$this->table} WHERE {$column} {$expression} '{$value}'";
         return $this;
     }
 
-   final public function andWhere(string $column,string  $value,string $expression = '='): Model{
+    final public function andWhere(string $column, string  $value, string $expression = '='): Model
+    {
         $this->query =  $this->query . " AND {$column} {$expression} '{$value}'";
         return $this;
     }
 
-    final public function orWhere(string $column,string  $value,string $expression = '='): Model{
+    final public function orWhere(string $column, string  $value, string $expression = '='): Model
+    {
         $this->query =  $this->query . " OR {$column} {$expression} '{$value}'";
         return $this;
     }
@@ -120,7 +124,7 @@ abstract class Model
             $this->order = " ORDER BY {$columnsOrder}";
             return $this;
         } catch (\PDOException $exception) {
-                return null;
+            return null;
         }
     }
 
@@ -143,7 +147,7 @@ abstract class Model
         return $this;
     }
 
-   final public function count(?string $params = null): int
+    final public function count(?string $params = null): int
     {
         $stmt = Connect::getInstance()->prepare($this->query);
         $stmt->execute($this->params);
@@ -169,7 +173,7 @@ abstract class Model
         }
     }
 
-    final protected function create(array|object $values): Model
+    private function create(array|object $values): Model
     {
         try {
 
@@ -187,7 +191,6 @@ abstract class Model
             return $this;
         } catch (\PDOException $exception) {
             throw  new \PDOException($exception->getMessage());
-
         }
     }
 
@@ -208,9 +211,9 @@ abstract class Model
             $data = $save;
             $stmt = Connect::getInstance()->prepare("UPDATE {$this->table} SET {$dataSet} WHERE id = :id");
             var_dump($stmt);
-            $stmt->bindValue(":id" , $this->id);
-            parse_str("id={$this->id}",$this->params);
-            $stmt->execute(array_merge($data,$this->params));
+            $stmt->bindValue(":id", $this->id);
+            parse_str("id={$this->id}", $this->params);
+            $stmt->execute(array_merge($data, $this->params));
             return ($stmt->rowCount() ?? 1);
         } catch (\PDOException $exception) {
             return throw new \PDOException($exception->getMessage());
@@ -222,7 +225,7 @@ abstract class Model
      * @param string|null $params
      * @return bool
      */
-    final public function delete(?string $terms, ?string $params):bool
+    final public function delete(?string $terms, ?string $params): bool
     {
         try {
             $stmt = Connect::getInstance()->prepare("DELETE FROM {$this->table} WHERE {$terms}");
@@ -238,11 +241,12 @@ abstract class Model
         }
     }
 
-    public function destroy():bool {
-        if(empty($this->id)){
-                return false;
+    public function destroy(): bool
+    {
+        if (empty($this->id)) {
+            return false;
         }
-        return $this->delete("id = :id","id={$this->id}");
+        return $this->delete("id = :id", "id={$this->id}");
     }
 
 
@@ -254,7 +258,7 @@ abstract class Model
     {
         $dataSet = [];
         foreach ($data as $key => $value) {
-            if (!in_array($key, $this->protected) && in_array($key,$this->fillable) && !empty($value)) {
+            if (!in_array($key, $this->protected) && in_array($key, $this->fillable) && !empty($value)) {
                 $dataSet[] = "{$key} = :{$key}";
             }
         }
@@ -262,9 +266,10 @@ abstract class Model
     }
 
 
-    final public function safe(): array {
+    final public function safe(): array
+    {
         $safe = (array)$this->data;
-        foreach ($this->protected as $unset){
+        foreach ($this->protected as $unset) {
             unset($safe[$unset]);
         }
         return $safe;

@@ -35,9 +35,9 @@
       <!-- Single Banner  -->
       <div class="col-lg-4 col-md-6 col-12">
         <div class="single-banner">
-          <img src="/storage/image/man.png" alt="#">
+          <img style="filter: grayscale(50%);" src="/storage/image/man.png" alt="#">
           <div class="content">
-            <p>Coleção Masculina</p>
+            <p class = 'text-dark' >Coleção Masculina</p>
             <a href="#">Descubra agora</a>
           </div>
         </div>
@@ -46,7 +46,7 @@
       <!-- Single Banner  -->
       <div class="col-lg-4 col-md-6 col-12">
         <div class="single-banner">
-          <img src="/storage/image/fem.png" alt="#">
+          <img style = 'filter: grayscale(50%);' src="/storage/image/fem.png" alt="#">
           <div class="content">
             <p>Coleção Feminina</p>
             <a href="#">Descubra agora</a>
@@ -57,7 +57,7 @@
       <!-- Single Banner  -->
       <div class="col-lg-4 col-12">
         <div class="single-banner tab-height">
-          <img src="/storage/image/bolsa.png" alt="#">
+          <img style = 'filter: grayscale(50%);'  src="/storage/image/bolsa.png" alt="#">
           <div class="content">
             <p>Coleção de Bolsas</p>
             <a href="#">Descubra agora</a>
@@ -69,3 +69,14 @@
   </div>
 </section>
 <!-- End Small Banner -->
+
+<section>
+    <div class = "container">
+        <div>
+            Test
+        </div>
+        <div class = "row">
+
+        </div>
+    </div>
+</section>

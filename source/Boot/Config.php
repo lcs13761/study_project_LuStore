@@ -16,7 +16,7 @@ define("CONF_URL_TEST" , "http://localhost");
 define("CONF_GOOGLE",[
   'clientId'     => '',
   'clientSecret' => '',
-  'redirectUri'  => '',
+  'redirectUri'  => 'http://localhost/login/google',
 ]);
 
 
@@ -27,7 +27,7 @@ define("CONF_GOOGLE",[
 define('AWS_BUCKET','lustore');
 define('AWS_KEY','');
 define('AWS_SECRET','');
-define('AWS_REGION','');
+define('AWS_REGION','us-east-2');
 
 
 /**

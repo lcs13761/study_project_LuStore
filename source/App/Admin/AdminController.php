@@ -18,7 +18,7 @@ class AdminController extends Controller implements IResourceController
      */
     public function index()
     {
-       $users = (new User())->where('level','5' , ">=")->fetch(true);
+       $users = User::where('level','5' , ">=")->fetch(true);
        return $this->view->render('admin/user/index',compact('users'));
     }
 
