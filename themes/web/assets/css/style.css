@@ -216,13 +216,23 @@
 	overflow: hidden;
 }
 .hero-slider .single-slider {
-	height: auto;
-	background-image: url('/storage/image/bann.jpg');
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
+    position:relative;
     height: 510px;
 }
+.hero-slider .single-slider::before{
+    content: "";
+    width:100%;
+    height: 100%;
+    filter: grayscale(50%);
+    top:0;
+    left:0;
+    position: absolute;
+    background-image: url('/storage/image/bann.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .hero-slider .text-inner {
 	
 }

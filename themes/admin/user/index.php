@@ -1,4 +1,5 @@
 <?php $v->layout("admin/template/layout"); ?>
+
 <?= $v->insert('admin/includes/dialog-remove'); ?>
 
 <section>

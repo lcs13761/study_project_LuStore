@@ -17,12 +17,12 @@ SimpleRouter::group(['prefix' => '/'], function () {
   });
 
   SimpleRouter::group(["namespace" => "Web"], function () {
-
       SimpleRouter::get('/ops/{errorCode}','ErrorController@index')->name('error.index');
-      SimpleRouter::get("/", "HomeController@index");
+      SimpleRouter::get("/", "HomeController@index")->name('home');
       SimpleRouter::get('/search/{search}',"HomeController@index");
 
-
+      SimpleRouter::get('category/{id}/{category}',"HomeController@show" )->name('category.show.web');
+      SimpleRouter::get('search',"HomeController@search");
 
     SimpleRouter::group(["prefix" => "auth"], function () {
       SimpleRouter::get("/create", "UserController@create")->name('auth.create');

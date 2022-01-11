@@ -46,7 +46,7 @@ class AuthController extends Controller
         $auth = Auth::attempt([
             'email' => $request->email,
             'password' => $request->password
-        ]);
+        ],$request->remember);
         if (!$auth) redirect("/login");
         redirect("/");
     }

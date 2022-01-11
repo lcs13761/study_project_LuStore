@@ -11,6 +11,7 @@ use Source\Models\User;
 use Tests\Support\Migration\src\TypeColumn;
 
 use Migrations;
+use Source\Models\Category;
 
 class HomeController extends Controller
 {
@@ -28,8 +29,33 @@ class HomeController extends Controller
             ""
         );
 
-        return $this->view->render("web/home", ["head" => $head]);
+        $categories = Category::all();
+        return $this->view->render("web/home", compact('head', 'categories'));
     }
 
-    public function show() {}
+    public function show($id)
+    {
+        $head = $this->seo->render(
+            "Site Modelo  .Conheca a " . CONF_SITE_NAME,
+            CONF_SITE_DESC,
+            url(),
+            ""
+        );
+
+
+        $products = Product::where('category_id', $id)->fetch(true);
+        return $this->view->render('web/products',compact('products','head'));
+    }
+
+    public function search(){
+        $head = $this->seo->render(
+            "Site Modelo  .Conheca a " . CONF_SITE_NAME,
+            CONF_SITE_DESC,
+            url(),
+            ""
+        );
+        $request = (object)input()->all();
+        $products = Product::where("name","%$request->s%",'LIKE')->fetch(true);
+        return $this->view->render('web/products',compact('products','head'));
+    }
 }

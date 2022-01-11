@@ -8,7 +8,7 @@ use Aws\S3\S3Client;
 
 class File
 {
-    private $s3;
+    private S3Client $s3;
 
     public function __construct(){
         $credentials = new Credentials(AWS_KEY, AWS_SECRET);
@@ -22,15 +22,18 @@ class File
     /**
      * @throws \Exception
      */
-    final public function save(array $file, string $drive = 's3')
+    final public function save(array $file, string $drive = 's3'): bool|string
     {
         if ($drive == 's3') {
-            return  $this->awsUpload($file);;
+            return  $this->awsUpload($file);
         }
         return true;
     }
 
-    private function awsUpload(array $file)
+    /**
+     * @throws \Exception
+     */
+    private function awsUpload(array $file): string
     {
         try {
             $result = $this->s3->putObject([
@@ -46,6 +49,9 @@ class File
 
     }
 
+    /**
+     * @throws \Exception
+     */
     public function destroy(string $file)
     {
 
@@ -63,13 +69,13 @@ class File
                return false;
            }
         }catch (S3Exception $e){
-            throw new \Exception($e->getAwsErrorMessage);
+            throw new \Exception($e->getAwsErrorMessage());
         }
     }
 
-    private function verify(string $file){
+    private function verify(string $file): bool
+    {
         try{
-
             $result = $this->s3->getObject([
                 'Bucket' => AWS_BUCKET,
                 'Key' => $this->formatFile($file)
@@ -81,7 +87,8 @@ class File
     }
 
     private function formatFile(string $file):string {
-        return utf8_decode(str_replace('https://lustore.s3.us-east-2.amazonaws.com/','',$file));
+        $nameFile = explode("/",$file);
+        return array_pop($nameFile);
 }
 
 }

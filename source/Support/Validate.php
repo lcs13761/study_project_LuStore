@@ -45,7 +45,7 @@ class Validate
             return;
         }
 
-        if (!password_verify(Auth::user()->password, $request['current_password'])) {
+        if (!password_verify(Auth::auth()->password, $request['current_password'])) {
             self::$valid = false;
             self::$errors['current_password'][] = "A senha informada não confere";
 
@@ -131,9 +131,9 @@ class Validate
 
                 $valueVerification = $valuesCheck[2];
                 $columnVerification = $valuesCheck[3];
-                $exists = $model->where($column, $value)->andWhere($columnVerification, $valueVerification, '!=');
+                $exists = $model::where($column, $value)->andWhere($columnVerification, $valueVerification, '!=');
             } else {
-                $exists = $model->where($column, $value);
+                $exists = $model::where($column, $value);
             }
             if ($exists->count() > 0) {
 
