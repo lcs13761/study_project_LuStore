@@ -21,14 +21,8 @@
                             <div class="float-sm-start ">
                                 <ul class="nav main-menu menu navbar-nav">
                                     <li class="active ms-2 "><a class="p-4 nav-link text-white fs-6" href="<?= url('/') ?>">Home</a></li>
-                                    <li class="nav-item"><a class="p-4 nav-link text-white fs-6" href="#">Produtos</a></li>
-                                    <li class=""><a class="p-4 nav-link text-white fs-6" href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
-                                        <!-- <ul class="dropdown">
-                                            <li><a href="cart.html">Cart</a></li>
-                                            <li><a href="checkout.html">Checkout</a></li>
-                                        </ul> -->
-                                    </li>
-                                    <li class=""><a class="p-4 nav-link text-white fs-6" href="contact.html">Entre em contato conosco</a></li>
+                                    <li class="nav-item"><a class="p-4 nav-link text-white fs-6" href="<?= url('search.web',['search' => 'all']) ?>">Produtos</a></li>
+                                    <li class=""><a class="p-4 nav-link text-white fs-6" href="#">Entre em contato conosco</a></li>
                                 </ul>
                             </div>
                         </div>

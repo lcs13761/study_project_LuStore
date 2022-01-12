@@ -4,18 +4,15 @@ namespace Source\Support;
 
 use CoffeeCode\Paginator\Paginator;
 
-class Pager extends Paginator
+class Pager
 {
-    /**
-     * Pager constructor.
-     *
-     * @param string $link
-     * @param null|string $title
-     * @param array|null $first
-     * @param array|null $last
-     */
-    public function __construct(string $link, ?string $title = null, ?array $first = null, ?array $last = null)
+    public $paginator;
+    public Paginator $pager;
+
+    public function __construct(int $rows, int $limit,int $page = 1)
     {
-        parent::__construct($link, $title, $first, $last);
+        $this->pager = new Paginator();
+        $this->pager->pager($rows, $limit, $page);
+        $this->paginator = $this->pager->render();
     }
 }

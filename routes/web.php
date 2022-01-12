@@ -19,10 +19,14 @@ SimpleRouter::group(['prefix' => '/'], function () {
   SimpleRouter::group(["namespace" => "Web"], function () {
       SimpleRouter::get('/ops/{errorCode}','ErrorController@index')->name('error.index');
       SimpleRouter::get("/", "HomeController@index")->name('home');
-      SimpleRouter::get('/search/{search}',"HomeController@index");
+    
 
-      SimpleRouter::get('category/{id}/{category}',"HomeController@show" )->name('category.show.web');
-      SimpleRouter::get('search',"HomeController@search");
+      SimpleRouter::get('category/{category}',"HomeController@show" )->name('category.show.web');
+      SimpleRouter::post('search',"HomeController@search");
+      SimpleRouter::get('search/{search}',"HomeController@search")->name('search.web');
+
+
+      SimpleRouter::get("product/{id}/{product}","ProductDetailedController@index")->name('product.index.web');
 
     SimpleRouter::group(["prefix" => "auth"], function () {
       SimpleRouter::get("/create", "UserController@create")->name('auth.create');

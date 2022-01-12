@@ -15,7 +15,7 @@
             <div class="row">
               <?php foreach ($products as $product) : ?>
                 <div class='col-2 col-sm-5 col-lg-3 col-xl-3 col-md-4 my-1'>
-                  <a class="text-decoration-none text-black" href='sad'>
+                  <a class="text-decoration-none text-black" href='<?= url('product.index.web',['id'=> $product->id,"product" => $product->name]) ?>'>
                     <div class='card-deck'>
                       <div class="card mb-2">
                         <img style='height:200px;' class="card-img-top img-fluid" src="<?= $product->image ??  "https://via.placeholder.com/200x200" ?>" alt="Card image cap">

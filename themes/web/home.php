@@ -38,7 +38,7 @@
           <img style="filter: grayscale(50%);" src="/storage/image/man.png" alt="#">
           <div class="content">
             <p class = 'text-dark' >Coleção Masculina</p>
-            <a href="#">Descubra agora</a>
+            <a href="<?= url('category.show.web', ["category" => "Roupa-Masculina"]) ?>">Descubra agora</a>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
           <img style = 'filter: grayscale(50%);' src="/storage/image/fem.png" alt="#">
           <div class="content">
             <p>Coleção Feminina</p>
-            <a href="#">Descubra agora</a>
+            <a href="<?= url('category.show.web', ["category" => "Roupa-Feminina"]) ?>">Descubra agora</a>
           </div>
         </div>
       </div>
@@ -70,13 +70,3 @@
 </section>
 <!-- End Small Banner -->
 
-<section>
-    <div class = "container">
-        <div>
-            Test
-        </div>
-        <div class = "row">
-
-        </div>
-    </div>
-</section>

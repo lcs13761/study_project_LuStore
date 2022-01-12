@@ -32,7 +32,7 @@ use Source\Models\Auth;
                     <div class="col-lg-8 col-md-7 col-12">
                         <div class="search-bar-top">
                             <div class="search-bar">
-                                <form method="get" action="<?= url("/search") ?>">
+                                <form method="post" action="<?= url("/search") ?>">
                                     <input name="s" placeholder="Search Products Here....." type="search">
                                     <button class="btnn"><i class="fas fa-search"></i></button>
                                 </form>

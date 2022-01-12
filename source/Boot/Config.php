@@ -40,7 +40,7 @@ define("MAIL_PORT",587);
 define("MAIL_USERNAME","apikey");
 define("MAIL_PASSWORD","");
 define("MAIL_ENCRYPTION","tls");
-define("MAIL_FROM_ADDRESS","");
+define("MAIL_FROM_ADDRESS","r");
 define("MAIL_FROM_NAME","LuStore");
 
 /**

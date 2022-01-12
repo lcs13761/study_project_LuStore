@@ -85,10 +85,14 @@ abstract class Model
         return $this->fetch();
     }
 
-    private function all()
+    private function all($fetch = true)
     {
         $this->query = "SELECT * FROM " . $this->table;
-        return $this->fetch(true);
+        if ($fetch) {
+            $this->query = "SELECT * FROM " . $this->table;
+            return $this->fetch(true);
+        }
+        return $this;
     }
 
     private function find(int|string $id): mixed
@@ -127,6 +131,7 @@ abstract class Model
             return null;
         }
     }
+
 
     /**define o limit para exibir */
     final public function limit(int $limit): Model
@@ -179,7 +184,7 @@ abstract class Model
 
             $save = [];
             foreach ($values as $key => $value) {
-                in_array($key, $this->fillable) && !empty($value) ? $save[$key] = $value : "";
+                in_array($key, $this->fillable) && !empty($value) ? $save[$key] = trim($value) : "";
             }
 
             $columns = implode(", ", array_keys($save));
