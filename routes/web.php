@@ -1,35 +1,17 @@
 <?php
 
-
+use App\Http\Controllers\Web\HomeController;
 use Pecee\Http\Request;
 use Pecee\SimpleRouter\SimpleRouter;
 
-SimpleRouter::group(['prefix' => '/'], function () {
-  SimpleRouter::get("/login", "AuthController@index")->name('login');
-  SimpleRouter::post("/login", "AuthController@login")->name('login.store');
-  SimpleRouter::get("/logout", "AuthController@logout")->name('logout');
-  SimpleRouter::get('/login/{auth}','AuthController@loginAuth');
 
-  SimpleRouter::group(["namespace" => "Auth"], function () {
-    SimpleRouter::get("/confirmar", "VerifyEmailController@index");
-    SimpleRouter::get("email/verify/{id}/{token}", "VerifyEmailController@verifiy");
-    SimpleRouter::get('forgot-password','PasswordController@index')->name('forgot.index');
-  });
 
-  SimpleRouter::group(["namespace" => "Web"], function () {
-      SimpleRouter::get('/ops/{errorCode}','ErrorController@index')->name('error.index');
-      SimpleRouter::get("/", "HomeController@index")->name('home');
-      SimpleRouter::get('/search/{search}',"HomeController@index");
+include('auth.php');
 
-      SimpleRouter::get('category/{id}/{category}',"HomeController@show" )->name('category.show.web');
-      SimpleRouter::get('search',"HomeController@search");
+include('admin.php');
 
-    SimpleRouter::group(["prefix" => "auth"], function () {
-      SimpleRouter::get("/create", "UserController@create")->name('auth.create');
-      SimpleRouter::post("/store", "UserController@store")->name('auth.store');
-    });
-  });
-});
+
+SimpleRouter::get("/", [HomeController::class,'index'])->name('web.home');
 
 //SimpleRouter::error(function(Request $request,\Exception $exception){
 //    switch($exception->getCode()) {
@@ -46,4 +28,3 @@ SimpleRouter::group(['prefix' => '/'], function () {
 //            break;
 //    }
 //});
-

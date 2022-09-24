@@ -1,11 +1,6 @@
 <?php
 
 
-define("CONF_DB_HOST","mysql");
-define("CONF_DB_USER","root");
-define("CONF_DB_NAME","lutest");
-define("CONF_DB_PASSWD","root");
-
 define("CONF_URL_BASE","http://localhost");
 define("CONF_URL_TEST" , "http://localhost");
 
@@ -40,7 +35,7 @@ define("MAIL_PORT",587);
 define("MAIL_USERNAME","apikey");
 define("MAIL_PASSWORD","");
 define("MAIL_ENCRYPTION","tls");
-define("MAIL_FROM_ADDRESS","");
+define("MAIL_FROM_ADDRESS","r");
 define("MAIL_FROM_NAME","LuStore");
 
 /**
