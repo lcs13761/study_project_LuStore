@@ -8,6 +8,16 @@ use Pecee\Http\Response;
 use Pecee\Http\Request;
 use Source\Models\User;
 
+if(!function_exists('auth')){
+    function auth(){
+        $session = new \App\Core\Session();
+        if (!$session->has("authUser")) {
+            return null;
+        }
+        return User::find($session->authUser);
+    }
+}
+
 if (!function_exists('abort')) {
 
     function abort($message = '')
@@ -135,7 +145,7 @@ if (!function_exists('csrf_token')) {
 
     function csrf_token()
     {
-        $session = new Session();
+        $session = new \App\Core\Session();
         $session->csrf();
         if (isset($session->csrf_token)) {
             return $session->csrf_token;
@@ -153,7 +163,7 @@ if (!function_exists('csrf_verify')) {
      */
     function csrf_verify($request): bool
     {
-        $session = new \Source\Core\Session();
+        $session = new \App\Core\Session();
         if (empty($session->csrf_token) || $request != $session->csrf_token) {
             return false;
         }
@@ -166,7 +176,7 @@ if (!function_exists('session')) {
 
     function session()
     {
-        return new Session();
+        return new \App\Core\Session();
     }
 }
 

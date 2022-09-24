@@ -1,11 +1,6 @@
 <?php
 
 
-define("CONF_DB_HOST","mysql");
-define("CONF_DB_USER","root");
-define("CONF_DB_NAME","lutest");
-define("CONF_DB_PASSWD","root");
-
 define("CONF_URL_BASE","http://localhost");
 define("CONF_URL_TEST" , "http://localhost");
 
