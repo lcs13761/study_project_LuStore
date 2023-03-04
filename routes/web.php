@@ -1,10 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\HomeController;
-use Pecee\Http\Request;
 use Pecee\SimpleRouter\SimpleRouter;
-
-
 
 include('auth.php');
 

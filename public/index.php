@@ -2,10 +2,11 @@
 
 ob_start();
 
-use Database\Connect;
+
 use Pecee\SimpleRouter\SimpleRouter;
 
 use App\Core\Session;
+use Bootstrap\Database\Connect;
 
 require __DIR__ . "/../vendor/autoload.php";
 
