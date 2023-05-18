@@ -7,8 +7,7 @@ include('auth.php');
 
 include('admin.php');
 
-
-SimpleRouter::get("/", [HomeController::class,'index'])->name('web.home');
+SimpleRouter::get("/", [HomeController::class, 'index'])->name('web.home');
 
 //SimpleRouter::error(function(Request $request,\Exception $exception){
 //    switch($exception->getCode()) {

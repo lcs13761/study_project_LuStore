@@ -59,12 +59,14 @@ trait HandleModel
         $dataSet = [];
 
         foreach ($data as $key => $value) {
-            if (!in_array($key, $this->protected) && in_array($key, $this->fillable) && !empty($value)) {
-                $dataSet[] = "{$key} = :{$key}";
+            if (empty($this->fillable)) {
+                !in_array($key, $this->protected) ? $dataSet[] = "{$key} = :{$key}" : '';
+            } else {
+                !in_array($key, $this->protected) && in_array($key, $this->fillable) ? $dataSet[] = "{$key} = :{$key}" : '';
             }
         }
-
-        $dataSet[] = "{updated_at} = :{updated_at}";
+        
+        $dataSet[] = "updated_at = :updated_at";
 
         return $dataSet;
     }
@@ -74,26 +76,32 @@ trait HandleModel
      * @param array $data
      * @return array
      */
-    public function filterValues(array $data, $action = 'update'): array
+    public function filterValues(array $data, $action = 'updated'): array
     {
         $dataSet = [];
 
         foreach (array_filter($data) as $key => $value) {
 
             if (empty($this->fillable)) {
-                !in_array($key, $this->protected) ?  $save[$key] = trim($value) : '';
+                !in_array($key, $this->protected) ? $dataSet[$key] = trim($value) : '';
             } else {
-                !in_array($key, $this->protected) && in_array($key, $this->fillable) ?  $save[$key] = trim($value) : '';
+                !in_array($key, $this->protected) && in_array($key, $this->fillable) ? $dataSet[$key] = trim($value) : '';
             }
         }
 
-        $action === 'updated' ?? $dataSet['created_at'] = time();
+        if ($action === 'created') {
+            $dataSet['created_at'] = date('Y-m-d H:i:s');
+        }
 
-        $dataSet['updated_at'] = time();
+        $dataSet['updated_at'] = date('Y-m-d H:i:s');
 
         return $dataSet;
     }
 
+    public function getData(): array
+    {
+        return (array) $this->data;
+    }
 
     /**
      * Undocumented function
@@ -102,7 +110,7 @@ trait HandleModel
      */
     final public function safe(): array
     {
-        $safe = (array)$this->data;
+        $safe = (array) $this->data;
         foreach ($this->protected as $unset) {
             unset($safe[$unset]);
         }
@@ -114,7 +122,7 @@ trait HandleModel
      */
     private function required(): bool
     {
-        $data = (array)$this->data();
+        $data = (array) $this->data();
         foreach ($this->fillable as $field) {
             if (empty($data[$field])) {
                 return false;

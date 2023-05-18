@@ -1,9 +1,5 @@
 {
-    "/public/css/materialize.css": "/public/css/materialize.css",
-    "/public/css/materialize.min.css": "/public/css/materialize.min.css",
-    "/public/css/style.css": "/public/css/style.css",
-    "/public/css/tailwind.css": "/public/css/tailwind.css",
-    "/public/css/tailwind.output.css": "/public/css/tailwind.output.css",
+    "/public/css/app.css": "/public/css/app.css",
     "/public/js/charts-bars.js": "/public/js/charts-bars.js",
     "/public/js/charts-lines.js": "/public/js/charts-lines.js",
     "/public/js/charts-pie.js": "/public/js/charts-pie.js",

@@ -1,5 +1,9 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
-mix.copyDirectory('resources/assets/css','public/assets/css');
-mix.copyDirectory('resources/assets/js','public/assets/js');
-mix.copyDirectory('resources/assets/images','public/assets/images');
+mix.copyDirectory("resources/assets/js", "public/js");
+
+mix.postCss("resources/assets/css/app.css", "public/css");
+
+// mix.copyDirectory("resources/assets/css", "public/assets/css");
+
+mix.copyDirectory("resources/assets/images", "public/images");

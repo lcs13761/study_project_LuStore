@@ -38,7 +38,7 @@ abstract class Model
      */
     public function toArray(): array
     {
-        return (array)$this->data;
+        return (array) $this->data;
     }
 
     /**
@@ -71,7 +71,7 @@ abstract class Model
      *
      * @return 
      */
-    private function all()
+    public function all()
     {
         $this->query = "SELECT {$this->getSelect()} FROM " . $this->table;
 
@@ -90,7 +90,7 @@ abstract class Model
 
         parse_str("id={$id}", $this->params);
 
-        return  $this->fetch();
+        return $this->fetch();
     }
 
     /**
@@ -116,9 +116,9 @@ abstract class Model
      * @param string $expression
      * @return Model
      */
-    final public function andWhere(string $column, string  $value, string $expression = '='): Model
+    final public function andWhere(string $column, string $value, string $expression = '='): Model
     {
-        $this->query =  $this->query . " AND {$column} {$expression} '{$value}'";
+        $this->query = $this->query . " AND {$column} {$expression} '{$value}'";
 
         return $this;
     }
@@ -131,9 +131,9 @@ abstract class Model
      * @param string $expression
      * @return Model
      */
-    final public function orWhere(string $column, string  $value, string $expression = '='): Model
+    final public function orWhere(string $column, string $value, string $expression = '='): Model
     {
-        $this->query =  $this->query . " OR {$column} {$expression} '{$value}'";
+        $this->query = $this->query . " OR {$column} {$expression} '{$value}'";
 
         return $this;
     }
@@ -212,12 +212,12 @@ abstract class Model
      * @param boolean $all
      * @return mixed
      */
-    final private function fetch(bool $all = false): mixed
+    private function fetch(bool $all = false): mixed
     {
         try {
             $stmt = Connect::getInstance()->prepare($this->query . $this->order . $this->limit . $this->offset);
 
-            $stmt->execute();
+            $stmt->execute($this->params);
 
             if (!$stmt->rowCount()) {
                 return null;
@@ -240,6 +240,8 @@ abstract class Model
      */
     final public function create(array|object $values): Model
     {
+        $db = Connect::getInstance();
+
         try {
             $save = $this->filterValues($values, 'created');
 
@@ -247,29 +249,30 @@ abstract class Model
 
             $values = ":" . implode(", :", array_keys($save));
 
-            $stmt = Connect::getInstance()->prepare("INSERT INTO {$this->table} ({$columns}) VALUES ({$values})");
+            $stmt = $db->prepare("INSERT INTO {$this->table} ({$columns}) VALUES ({$values})");
 
             $stmt->execute($save);
 
-            $id = Connect::getInstance()->lastInsertId();
+            $id = $db->lastInsertId();
 
             $this->data = $this->find($id);
 
             return $this;
         } catch (\PDOException $exception) {
 
+            var_dump($exception->getMessage());
             throw new \PDOException($exception->getMessage(), $exception->getCode());
         }
     }
 
     /**
      * @param array|null $data
-     * @return int|PDOException
+     * @return int|\PDOException
      */
     final public function update(?array $data = null): int|\PDOException
     {
         try {
-            $dataSet =  $this->filter($data);
+            $dataSet = $this->filter($data);
 
             $dataSet = implode(", ", $dataSet);
 
@@ -277,12 +280,15 @@ abstract class Model
 
             $stmt->bindValue(":id", $this->id);
 
-            parse_str("id={$this->id}", $this->data);
+            $data = $this->filterValues($data);
 
-            $stmt->execute(array_merge($this->filterValues($data)));
+            parse_str("id={$this->id}", $params);
+
+            $stmt->execute(array_merge($data, $params));
 
             return ($stmt->rowCount() ?? 1);
         } catch (\PDOException $exception) {
+            print_r($exception->getMessage());
             throw new \PDOException($exception->getMessage(), $exception->getCode());
         }
     }

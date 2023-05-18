@@ -7,11 +7,17 @@ use Pecee\SimpleRouter\SimpleRouter;
 // 'middleware' => App\Http\Middleware\Auth::class, 'namespace' => 'admin'
 SimpleRouter::group(['prefix' => '/admin', 'namespace' => 'Admin', 'as' => 'admin'], function () {
 
-
     SimpleRouter::get('/', [DashBoardController::class, 'index'])->name('dashboard');
 
     SimpleRouter::get('/account', [MyAccountController::class, 'index'])->name('account');
-    //SimpleRouter::resource('users', UserController::class);
+
+    SimpleRouter::get('/users', [UserController::class, 'index'])->name('users.index');
+    SimpleRouter::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    SimpleRouter::post('/users/store', [UserController::class, 'store'])->name('users.store');
+    SimpleRouter::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    SimpleRouter::put('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
+    SimpleRouter::delete('/users/{id}/destroy', [UserController::class, 'destroy'])->name('users.destroy');
+    // SimpleRouter::resource('users', UserController::class);
 
     //     SimpleRouter::group(['prefix' => '/product'], function () {
     //         SimpleRouter::get('/', 'ProductController@index')->name('product.index');

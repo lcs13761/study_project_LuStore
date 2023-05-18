@@ -36,6 +36,18 @@ class MenuLoader
                 'icon' => 'pie-chart',
                 'authorized' => ['default']
             ],
+            [
+                'navheader' => __('locale.admin'),
+                'slug' => '',
+                'authorized' => ['default']
+            ],
+            [
+                'name' => __('locale.users'),
+                'url' => url('admin.users.index'),
+                'slug' => 'admin.users',
+                'icon' => 'pie-chart',
+                'authorized' => ['default']
+            ],
         ];
     }
 }

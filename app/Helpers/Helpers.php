@@ -98,7 +98,9 @@ if (!function_exists('config')) {
     {
         if (str_contains($value, ".")) {
             $array = explode(".", $value);
+
             $configResult = include base_app("config/$array[0].php");
+
             $values = $configResult;
             unset($array[0]);
 
@@ -117,7 +119,16 @@ if (!function_exists('config')) {
 if (!function_exists('base_app')) {
     function base_app(string $path): string
     {
-        return realpath('../' . $path);
+        $currentPath = getcwd();
+
+        while (!file_exists($currentPath . '/' . $path)) {
+            $currentPath = dirname($currentPath);
+            if ($currentPath === '/') {
+                break;
+            }
+        }
+
+        return $currentPath . '/' . $path;
     }
 }
 
@@ -163,7 +174,7 @@ if (!function_exists('__')) {
 if (!function_exists('assets')) {
     function assets($path)
     {
-        return env('APP_URL') . "/"  . ($path[0] == "/" ? mb_substr($path, 1) : $path);
+        return env('APP_URL') . "/" . ($path[0] == "/" ? mb_substr($path, 1) : $path);
     }
 }
 

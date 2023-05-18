@@ -7,7 +7,10 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx mix",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,9 @@
   },
   "homepage": "https://github.com/lcs13761/Project4#readme",
   "devDependencies": {
-    "laravel-mix": "^6.0.43"
+    "cross-env": "^7.0.3",
+    "laravel-mix": "^6.0.43",
+    "postcss-loader": "^7.2.4",
+    "tailwindcss": "^3.3.2"
   }
 }

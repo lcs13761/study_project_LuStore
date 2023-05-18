@@ -13,7 +13,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return view('auth.login');
+        return view('auth.login.login');
     }
 
     // /**
@@ -31,20 +31,20 @@ class AuthenticatedSessionController extends Controller
         // return redirect()->intended(RouteServiceProvider::HOME);
     }
 
-    // /**
-    //  * Destroy an authenticated session.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\RedirectResponse
-    //  */
-    // public function destroy(Request $request)
-    // {
-    //     Auth::guard('web')->logout();
+// /**
+//  * Destroy an authenticated session.
+//  *
+//  * @param  \Illuminate\Http\Request  $request
+//  * @return \Illuminate\Http\RedirectResponse
+//  */
+// public function destroy(Request $request)
+// {
+//     Auth::guard('web')->logout();
 
-    //     $request->session()->invalidate();
+//     $request->session()->invalidate();
 
-    //     $request->session()->regenerateToken();
+//     $request->session()->regenerateToken();
 
-    //     return redirect('/login');
-    // }
+//     return redirect('/login');
+// }
 }
